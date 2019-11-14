@@ -292,4 +292,38 @@ let tree = {
     }
 }
 
-console.log(isSymmetric(tree))
+isSymmetric(tree)
+
+/** 路径总和
+ *  https://leetcode-cn.com/explore/learn/card/data-structure-binary-tree/3/solve-problems-recursively/14/
+ * @param {TreeNode} root
+ * @param {number} sum
+ * @return {boolean}
+ */
+var hasPathSum = function(root, sum) {
+    let accmulator = 0
+    function traversal(node) {
+        if (!node) {
+            return false
+        }
+        accmulator += node.val
+        // 如果是叶子节点
+        if (!node.left && !node.right && accmulator === sum) {
+            if (accmulator === sum) {
+                return true
+            } else {
+                accmulator -= node.val
+                return false
+            }
+        }
+        if (traversal(node.left)) {
+            return true
+        }
+        if (traversal(node.right)) {
+            return true
+        }
+        accmulator -= node.val
+        return false
+    }
+    return traversal(root)
+};
