@@ -327,3 +327,50 @@ var hasPathSum = function(root, sum) {
     }
     return traversal(root)
 };
+
+/**
+ * 从中序与后序遍历序列构造二叉树
+ * https://leetcode-cn.com/explore/learn/card/data-structure-binary-tree/4/conclusion/15/
+ * @param {number[]} inorder
+ * @param {number[]} postorder
+ * @return {TreeNode}
+ */
+var buildTree = function(inorder, postorder) {
+    if (!postorder || postorder.length === 0) {
+        return null
+    }
+    let root = {}
+    root.val = postorder[postorder.length - 1]
+    let idxInorder = inorder.indexOf(root.val)
+    let leftInorder = inorder.slice(0, idxInorder)
+    let rightInorder = inorder.slice(idxInorder+1)
+    let leftPostorder = postorder.slice(0, leftInorder.length)
+    let rightPostorder = postorder.slice(leftInorder.length, -1)
+    root.left = buildTree(leftInorder, leftPostorder)
+    root.right = buildTree(rightInorder, rightPostorder)
+    return root
+};
+
+/**
+ * 从前序与中序遍历序列构造二叉树
+ * https://leetcode-cn.com/explore/learn/card/data-structure-binary-tree/4/conclusion/16/
+ * @param {number[]} preorder
+ * @param {number[]} inorder
+ * @return {TreeNode}
+ */
+var buildTree = function(preorder, inorder) {
+    if (!preorder || preorder.length === 0) {
+        return null
+    }
+    let root = {}
+    root.val = preorder[0]
+    let idxInorder = inorder.indexOf(root.val)
+    let leftInorder = inorder.slice(0, idxInorder)
+    let rightInorder = inorder.slice(idxInorder+1)
+    let leftPreorder = preorder.slice(1, leftInorder.length + 1)
+    let rightPreorder = preorder.slice(leftInorder.length + 1)
+    root.left = buildTree(leftPreorder, leftInorder)
+    root.right = buildTree(rightPreorder, rightInorder)
+    return root
+    
+};
