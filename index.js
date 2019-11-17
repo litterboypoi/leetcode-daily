@@ -374,3 +374,61 @@ var buildTree = function(preorder, inorder) {
     return root
     
 };
+
+/**
+ * 填充每个节点的下一个右侧节点指针
+ * https://leetcode-cn.com/explore/learn/card/data-structure-binary-tree/4/conclusion/17/
+ * @param {Node} root
+ * @return {Node}
+ */
+var connect = function(root) {
+    if (!root || !root.left) {
+        return root
+    }
+    root.left.next = root.right
+    if (root.next) {
+        root.right.next = root.next.left
+    }
+    connect(root.left)
+    connect(root.right)
+    return root
+};
+
+/**
+ * 填充每个节点的下一个右侧节点指针 II
+ * https://leetcode-cn.com/explore/learn/card/data-structure-binary-tree/4/conclusion/18/
+ * @param {Node} root
+ * @return {Node}
+ */
+var connect = function(root) {
+    if (!root) {
+        return null
+    }
+    if (root.left) {
+        if (root.right) {
+            root.left.next = root.right
+        } else if (root.next) {
+            setNext(root.left, root)
+        }
+    }
+    if (root.right) {
+        setNext(root.right, root)
+    }
+    // 先右后左，很重要！！！
+    connect(root.right)
+    connect(root.left)
+    return root
+};
+    
+function setNext(node, root) {
+    if (root.next) {
+            if (root.next.left) {
+                node.next = root.next.left
+            } else if (root.next.right) {
+                node.next = root.next.right
+            } else {
+                setNext(node, root.next)
+            }
+        }
+}
+
