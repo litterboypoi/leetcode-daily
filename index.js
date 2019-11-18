@@ -432,3 +432,46 @@ function setNext(node, root) {
         }
 }
 
+/**
+ * 二叉树的最近公共祖先
+ * https://leetcode-cn.com/explore/learn/card/data-structure-binary-tree/4/conclusion/19/
+ * @param {TreeNode} root
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {TreeNode}
+ */
+var lowestCommonAncestor = function(root, p, q) {
+    let stackP = []
+    let stackQ = []
+    function dfs(node, stack, target) {
+        if (!node) {
+            return false
+        }
+        stack.push(node)
+        if (node.val === target.val) {
+            return true
+        }
+        if (dfs(node.left, stack, target) || dfs(node.right, stack, target)) {
+            return true
+        }
+        stack.pop()
+        return false
+    }
+    dfs(root, stackP, p)
+    dfs(root, stackQ, q)
+    // p、q 为不同节点且均存在于给定的二叉树中。
+    // 就不做找没找到的判断了
+    if (stackP.length > stackQ.length) {
+        stackP.splice(stackQ.length)
+    } else {
+        stackQ.splice(stackP.length)
+    }
+    
+    while(true) {
+        let node1 = stackP.pop()
+        let node2 = stackQ.pop()
+        if (node1.val === node2.val) {
+            return node1
+        }
+    }
+};
