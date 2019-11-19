@@ -285,9 +285,6 @@ let tree = {
         val: 2,
         right: {
             val: 3
-        },
-        left: {
-            val: 4
         }
     }
 }
@@ -475,3 +472,112 @@ var lowestCommonAncestor = function(root, p, q) {
         }
     }
 };
+
+/**
+ *  二叉树的序列化与反序列化
+ * https://leetcode-cn.com/explore/learn/card/data-structure-binary-tree/4/conclusion/20/
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+
+/**
+ * Encodes a tree to a single string.
+ *
+ * @param {TreeNode} root
+ * @return {string}
+ */
+var serialize = function(root) {
+    let queue = []
+    queue.push(root)
+    let pointer = 0
+    function bfs(queue) {
+        if (pointer === queue.length) {
+            return
+        }
+        let current = queue[pointer]
+        // TODO unfinish
+        if (current && (current.left || current.right)) {
+            queue.push(current.left)
+            queue.push(current.right)
+        }
+        pointer++
+        bfs(queue)
+    }
+    bfs(queue)
+    let str = queue.reduce((acc, cur) => {
+        if (!acc) {
+            if (!cur) {
+                return ''
+            }
+            return `${cur.val}`
+        }
+        if (cur) {
+            return `${acc},${cur.val}`
+        } else {
+            return `${acc}, null`
+        }
+    }, '')
+    return `[${str}]`
+};
+
+/**
+ * Decodes your encoded data to tree.
+ *
+ * @param {string} data
+ * @return {TreeNode}
+ */
+var deserialize = function(data) {
+    data = JSON.parse(data)
+    if (data.length === 0) {
+        return null
+    }
+    let dataPointer = 0
+    let processQueue = []
+    let pointer = -1
+    let root = {
+        val: data[dataPointer]
+    }
+    processQueue.push(root)
+    pointer++
+    dataPointer++
+    function buildTree(queue) {
+        if (dataPointer >= data.length) {
+            return
+        }
+        let currentNode = queue[pointer]
+        pointer++
+        if (currentNode) {
+            if (data[dataPointer] !== null) {
+                currentNode.left = {
+                    val: data[dataPointer]
+                }
+            } else {
+                currentNode.left = null
+            }
+            queue.push(currentNode.left)
+            dataPointer++
+            if (data[dataPointer] !== null) {
+                currentNode.right = {
+                    val: data[dataPointer]
+                }
+            } else {
+                currentNode.right = null
+            }
+            queue.push(currentNode.right)
+            dataPointer++
+        }
+        buildTree(queue)
+    }
+    buildTree(processQueue)
+    return root
+};
+
+/**
+ * Your functions will be called as such:
+ * deserialize(serialize(root));
+ */
+
+console.log(serialize(deserialize("[1,2,3,null,null,4,5]")))
