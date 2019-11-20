@@ -490,6 +490,9 @@ var lowestCommonAncestor = function(root, p, q) {
  * @return {string}
  */
 var serialize = function(root) {
+    if (!root) {
+        return '[]'
+    }
     let queue = []
     queue.push(root)
     let pointer = 0
@@ -498,8 +501,9 @@ var serialize = function(root) {
             return
         }
         let current = queue[pointer]
-        // TODO unfinish
-        if (current && (current.left || current.right)) {
+        // * 把叶子节点的left、right也都push进队列
+        // * 只有最深的叶子节点的left、right才能被去掉
+        if (current) {
             queue.push(current.left)
             queue.push(current.right)
         }
@@ -507,6 +511,14 @@ var serialize = function(root) {
         bfs(queue)
     }
     bfs(queue)
+    // 把最深层的叶子节点的left、right去掉
+    while (true) {
+        let lastNode =  queue.pop()
+        if (lastNode) {
+            queue.push(lastNode)
+            break
+        }
+    }
     let str = queue.reduce((acc, cur) => {
         if (!acc) {
             if (!cur) {
@@ -550,7 +562,7 @@ var deserialize = function(data) {
         let currentNode = queue[pointer]
         pointer++
         if (currentNode) {
-            if (data[dataPointer] !== null) {
+            if (data[dataPointer] !== null && data[dataPointer] !== undefined) {
                 currentNode.left = {
                     val: data[dataPointer]
                 }
@@ -559,7 +571,7 @@ var deserialize = function(data) {
             }
             queue.push(currentNode.left)
             dataPointer++
-            if (data[dataPointer] !== null) {
+            if (data[dataPointer] !== null && data[dataPointer] !== undefined) {
                 currentNode.right = {
                     val: data[dataPointer]
                 }
@@ -580,4 +592,4 @@ var deserialize = function(data) {
  * deserialize(serialize(root));
  */
 
-console.log(serialize(deserialize("[1,2,3,null,null,4,5]")))
+console.log(serialize(deserialize("[1,2]")))
