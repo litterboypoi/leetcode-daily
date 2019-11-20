@@ -592,4 +592,23 @@ var deserialize = function(data) {
  * deserialize(serialize(root));
  */
 
-console.log(serialize(deserialize("[1,2]")))
+
+ /**
+  * 验证二叉搜索树
+  * https://leetcode-cn.com/explore/learn/card/introduction-to-data-structure-binary-search-tree/64/introduction-to-a-bst/171/
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var isValidBST = function(root) {
+    return validate(root, -Infinity, Infinity)
+    function validate(node, min, max) {
+        if (!node) {
+            return true
+        }
+        let {left, right} = node
+        if ( node.val <= min || node.val >=max) {
+            return false
+        }
+        return validate(left, min, node.val) && validate(right, node.val, max)
+    }
+};
