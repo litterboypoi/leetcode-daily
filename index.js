@@ -612,3 +612,56 @@ var isValidBST = function(root) {
         return validate(left, min, node.val) && validate(right, node.val, max)
     }
 };
+
+/**
+ * 二叉搜索树迭代器
+ * https://leetcode-cn.com/explore/learn/card/introduction-to-data-structure-binary-search-tree/64/introduction-to-a-bst/172/
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ */
+var BSTIterator = function(root) {
+    this.queue = inorderTraversal(root, [])
+    this.queuePointer = 0
+};
+
+/**
+ * @return the next smallest number
+ * @return {number}
+ */
+BSTIterator.prototype.next = function() {
+    let nextVal = this.queue[this.queuePointer]
+    this.queuePointer++
+    return nextVal
+};
+
+/**
+ * @return whether we have a next smallest number
+ * @return {boolean}
+ */
+BSTIterator.prototype.hasNext = function() {
+    return this.queuePointer < this.queue.length
+};
+
+
+var inorderTraversal = function(root, queue) {
+    if (!root) {
+        return queue
+    }
+    inorderTraversal(root.left, queue)
+    queue.push(root.val)
+    inorderTraversal(root.right, queue)
+    return queue
+};
+
+/** 
+ * Your BSTIterator object will be instantiated and called as such:
+ * var obj = new BSTIterator(root)
+ * var param_1 = obj.next()
+ * var param_2 = obj.hasNext()
+ */
