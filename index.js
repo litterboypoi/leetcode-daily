@@ -665,3 +665,23 @@ var inorderTraversal = function(root, queue) {
  * var param_1 = obj.next()
  * var param_2 = obj.hasNext()
  */
+
+ /**
+  * Search in a Binary Search Tree
+  * https://leetcode-cn.com/explore/learn/card/introduction-to-data-structure-binary-search-tree/65/basic-operations-in-a-bst/174/
+ * @param {TreeNode} root
+ * @param {number} val
+ * @return {TreeNode}
+ */
+var searchBST = function(root, val) {
+    if (!root) {
+        return null
+    }
+    if (root.val === val) {
+        return root
+    } else if (root.val > val) {
+        return searchBST(root.left, val)
+    } else {
+        return searchBST(root.right, val)
+    }
+};
