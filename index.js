@@ -685,3 +685,22 @@ var searchBST = function(root, val) {
         return searchBST(root.right, val)
     }
 };
+
+/**
+ * Insert into a Binary Search Tree
+ * https://leetcode-cn.com/explore/learn/card/introduction-to-data-structure-binary-search-tree/65/basic-operations-in-a-bst/177/
+ * @param {TreeNode} root
+ * @param {number} val
+ * @return {TreeNode}
+ */
+var insertIntoBST = function(root, val) {
+    if (!root) {
+        return {val, left: null, right: null}
+    }
+    if (root.val > val) {
+        root.left = insertIntoBST(root.left, val)
+    } else {
+        root.right = insertIntoBST(root.right, val)
+    }
+    return root
+};
