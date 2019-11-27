@@ -746,4 +746,80 @@ function deleteMin(root) {
   return root
 }
 
-console.log(deleteNode(deserialize("[1,null,2]"), 2))
+// console.log(deleteNode(deserialize("[1,null,2]"), 2))
+
+/**
+ * https://leetcode-cn.com/explore/learn/card/introduction-to-data-structure-binary-search-tree/66/conclusion/183/
+ * Kth Largest Element in a Stream
+ * @param {number} k
+ * @param {number[]} nums
+ */
+var KthLargest = function(k, nums) {
+    this.bst = constructBST(nums)
+    this.k = k
+};
+
+function constructBST(nums) {
+    if (nums.length === 0) {
+        return null
+    }
+    let val = nums.pop()
+    let root = {val, left: null, right: null}
+    while(nums.length) {
+        setNode(root, nums.pop())
+    }
+    return root
+    
+}
+
+    function setNode(root, val) {
+        if (!root) {
+            return {val, left: null, right: null}
+        }
+        if (val > root.val) {
+            root.right = setNode(root.right, val)
+            return root
+        } else {
+            root.left = setNode(root.left, val)
+            return root
+        }
+    }
+/** 
+ * @param {number} val
+ * @return {number}
+ */
+KthLargest.prototype.add = function(val) {
+    this.bst = insetIntoBST(this.bst, val)
+    return searchKthBST(this.bst, this.k)
+};
+
+function insetIntoBST(root, val) {
+    if (!root) {
+        return {val}
+    }
+    if (val > root.val) {
+        root.right = insetIntoBST(root.right, val)
+        return root
+    } else {
+        root.left = insetIntoBST(root.left, val)
+        return root
+    }
+}
+
+function searchKthBST(root, k) {
+    let i = 0
+    function search(root, k) {
+        if (!root) {
+            return null
+        }
+        let result = search(root.right, k)
+        if (result !== null) {
+            return result
+        }
+        if (++i === k) {
+            return root.val
+        }
+        return search(root.left, k)
+    }
+    return search(root, k)
+}
