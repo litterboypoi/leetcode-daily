@@ -704,3 +704,46 @@ var insertIntoBST = function(root, val) {
     }
     return root
 };
+
+// 450 Delete Node in a BST
+var deleteNode = function(root, key) {
+    if (root === null) {
+      return null
+    }
+    if (key < root.val) {
+      root.left = deleteNode(root.left, key)
+      return root
+    } else if (key > root.val) {
+      root.right = deleteNode(root.right, key)
+      return root
+    } else {
+      if (root.left === null) {
+        return root.right
+      } else if (root.right === null) {
+        return root.left
+      } else {
+        let successor = min(root.right)
+        // 先right后left，顺序很重要
+        successor.right = deleteMin(root.right)
+        successor.left = root.left
+        return successor
+      }
+    }
+};
+
+function min(root) {
+  if (root.left === null) {
+    return root
+  }
+  return min(root.left)
+}
+
+function deleteMin(root) {
+  if (root.left === null) {
+    return root.right
+  }
+  root.left = deleteMin(root.left)
+  return root
+}
+
+console.log(deleteNode(deserialize("[1,null,2]"), 2))
