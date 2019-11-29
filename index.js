@@ -823,3 +823,24 @@ function searchKthBST(root, k) {
     }
     return search(root, k)
 }
+
+/**
+ * 二叉搜索树的最近公共祖先
+ * https://leetcode-cn.com/explore/learn/card/introduction-to-data-structure-binary-search-tree/66/conclusion/185/
+ * @param {TreeNode} root
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {TreeNode}
+ */
+var lowestCommonAncestor = function(root, p, q) {
+    if (!root) {
+        return root
+    }
+    if (root.val > p.val && root.val > q.val) {
+        return lowestCommonAncestor(root.left, p, q)
+    } else if (root.val < p.val && root.val < q.val) {
+        return lowestCommonAncestor(root.right, p, q)
+    } else {
+        return root
+    }
+};
