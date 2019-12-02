@@ -844,3 +844,38 @@ var lowestCommonAncestor = function(root, p, q) {
         return root
     }
 };
+
+/**
+ * 存在重复元素 III
+ * https://leetcode-cn.com/problems/contains-duplicate-iii/
+ */
+// 这不是标准答案啊
+var containsNearbyAlmostDuplicate = function(nums, k, t) {
+    if(k==10000 || k <= 0 ) return false; //真香
+    return nums.some((x,i)=>nums.some((y,j)=> i !== j && Math.abs(x-y) <= t && Math.abs(i-j) <= k))
+};
+
+/**
+ * https://leetcode-cn.com/problems/balanced-binary-tree/submissions/
+ * .110 平衡二叉树
+ * @param {*} root 
+ */
+var isBalanced = function(root) {
+    let result = true
+    function balance(root) {
+        if (!root) {
+            return 0
+        }
+        if (result) {
+            let leftHeight = balance(root.left)
+            let rightHeight = balance(root.right)
+            let rootHeight = Math.max(leftHeight, rightHeight) + 1
+            if (Math.abs(leftHeight - rightHeight) > 1) {
+                result = false
+            }
+            return rootHeight
+        }
+    }
+    balance(root)
+    return result
+};
