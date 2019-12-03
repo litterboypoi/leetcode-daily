@@ -896,3 +896,41 @@ var sortedArrayToBST = function(nums) {
     root.right = sortedArrayToBST(nums.slice(midIndex + 1))
     return root
 };
+
+/**
+ * https://leetcode-cn.com/problems/number-of-islands/submissions/
+ * 岛屿数量
+ * @param {*} grid 
+ */
+var numIslands = function(grid) {
+    let res = 0
+    if (!grid || grid.length === 0) {
+        return res
+    }
+    for (let i = 0; i < grid.length; i++) {
+        for(let j = 0; j < grid[0].length; j++) {
+            if (grid[i][j] === "1") {
+                res++
+                bfs(grid, i, j)
+            }
+        }
+    }
+    return res
+};
+
+var bfs = function(grid, x, y) {
+    if (!verify(x, y, grid.length, grid[0].length)) {
+        return
+    }
+    if (grid[x][y] === '1') {
+        grid[x][y] = '2'
+        bfs(grid, x, y + 1)
+        bfs(grid, x + 1, y)
+        bfs(grid, x, y - 1)
+        bfs(grid, x - 1, y)
+    }
+}
+
+var verify = function(x, y, row, col) {
+    return x >=0 && x < row && y >=0 && y < col;
+}
