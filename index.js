@@ -879,3 +879,20 @@ var isBalanced = function(root) {
     balance(root)
     return result
 };
+
+/**
+ * 108. 将有序数组转换为二叉搜索树
+ * https://leetcode-cn.com/problems/convert-sorted-array-to-binary-search-tree/submissions/
+ * @param {number[]} nums
+ * @return {TreeNode}
+ */
+var sortedArrayToBST = function(nums) {
+    if (nums.length === 0) {
+        return null
+    }
+    let midIndex = Math.floor(nums.length / 2)
+    let root = {val: nums[midIndex]}
+    root.left = sortedArrayToBST(nums.slice(0, midIndex))
+    root.right = sortedArrayToBST(nums.slice(midIndex + 1))
+    return root
+};
