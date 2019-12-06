@@ -934,3 +934,59 @@ var bfs = function(grid, x, y) {
 var verify = function(x, y, row, col) {
     return x >=0 && x < row && y >=0 && y < col;
 }
+
+/**
+ * https://leetcode-cn.com/problems/open-the-lock/submissions/
+ * 752. 打开转盘锁
+ * @param {string[]} deadends
+ * @param {string} target
+ * @return {number}
+ */
+var openLock = function(deadends, target) {
+    const deadendSet = new Set(deadends)
+    if (deadendSet.has(target) || deadendSet.has('0000')) {
+        return -1
+    }
+    const visitedSet = new Set()
+    let stack1 = []
+    let stack2 = []
+    let step = 0
+    stack1.push('0000')
+    while (stack1.length !== 0) {
+        const cur = stack1.pop()
+        if (cur === target) {
+            return step
+        }
+        visitedSet.add(cur)
+        const nexts = getNexts(cur, deadendSet, visitedSet)
+        stack2 = stack2.concat(nexts)
+        if (stack1.length === 0) {
+            step++
+            stack1 = stack2
+            stack2 = []
+        }
+    }
+    return -1
+};
+
+var getNexts = function(cur, deadendSet, visitedSet) {
+    const nexts = []
+    for (let i = 0; i < cur.length; i++) {
+        const item = +cur[i]
+        const nextItem1 = (item + 10 + 1) % 10
+        const nextItem2 = (item + 10 - 1) % 10
+        const next1 = `${cur.slice(0, i)}${nextItem1}${cur.slice(i + 1)}`
+        const next2 = `${cur.slice(0, i)}${nextItem2}${cur.slice(i + 1)}`
+        if (!deadendSet.has(next1) && !visitedSet.has(next1)) {
+            nexts.push(next1)
+            visitedSet.add(next1)
+        }
+        if (!deadendSet.has(next2) && !visitedSet.has(next2)) {
+            nexts.push(next2)
+            visitedSet.add(next2)
+        }
+    }
+    return nexts
+}
+
+console.log(openLock(["8887","8889","8878","8898","8788","8988","7888","9888"], '8888'))
