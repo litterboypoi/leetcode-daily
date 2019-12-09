@@ -989,4 +989,56 @@ var getNexts = function(cur, deadendSet, visitedSet) {
     return nexts
 }
 
-console.log(openLock(["8887","8889","8878","8898","8788","8988","7888","9888"], '8888'))
+/**
+ * 最小栈
+ * https://leetcode-cn.com/problems/min-stack/submissions/
+ * initialize your data structure here.
+ */
+var MinStack = function() {
+    this.data = []
+    this.helper = []
+};
+
+/** 
+ * @param {number} x
+ * @return {void}
+ */
+MinStack.prototype.push = function(x) {
+    this.data.push(x)
+    if (this.helper.length === 0 || x <= this.helper[this.helper.length - 1]) {
+        this.helper.push(x)
+    }
+};
+
+/**
+ * @return {void}
+ */
+MinStack.prototype.pop = function() {
+    const val = this.data.pop()
+    if (val === this.helper[this.helper.length - 1]) {
+        this.helper.pop()
+    }
+};
+
+/**
+ * @return {number}
+ */
+MinStack.prototype.top = function() {
+    return this.data[this.data.length - 1]
+};
+
+/**
+ * @return {number}
+ */
+MinStack.prototype.getMin = function() {
+    return this.helper[this.helper.length - 1]
+};
+
+/** 
+ * Your MinStack object will be instantiated and called as such:
+ * var obj = new MinStack()
+ * obj.push(x)
+ * obj.pop()
+ * var param_3 = obj.top()
+ * var param_4 = obj.getMin()
+ */
