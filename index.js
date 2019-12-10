@@ -1135,3 +1135,35 @@ var evalRPN = function(tokens) {
     }
     return stack.pop()
 };
+
+/**
+ * // Definition for a Node.
+ * function Node(val,neighbors) {
+ *    this.val = val;
+ *    this.neighbors = neighbors;
+ * };
+ */
+/**
+ * 133. 克隆图
+ * https://leetcode-cn.com/problems/clone-graph/submissions/
+ * @param {Node} node
+ * @return {Node}
+ */
+var cloneGraph = function(node) {
+    const helper = new Map()
+    function clone(node) {
+        if (helper.get(node)) {
+            return helper.get(node)
+        }
+        const newNode = new Node(node.val, null)
+        helper.set(node, newNode)
+        if (node.neighbors) {
+            newNode.neighbors = []
+            for (let neighbor of node.neighbors) {
+                newNode.neighbors.push(clone(neighbor))
+            }
+        }
+        return newNode
+    }
+    return clone(node)
+};
