@@ -1167,3 +1167,28 @@ var cloneGraph = function(node) {
     }
     return clone(node)
 };
+
+/**
+ * 494. 目标和
+ * https://leetcode-cn.com/problems/target-sum/submissions/
+ * @param {number[]} nums
+ * @param {number} S
+ * @return {number}
+ */
+var findTargetSumWays = function(nums, S) {
+    let result = 0
+    let pointer = nums.length - 1
+    function calc(accmulator, pointer) {
+        if (pointer === -1) {
+            if (accmulator === S) {
+                result++
+            }
+            return
+        }
+        const currentNum = nums[pointer]
+        calc(accmulator + currentNum, --pointer)
+        calc(accmulator - currentNum, pointer)
+    }
+    calc(0, pointer)
+    return result
+};
