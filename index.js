@@ -1042,3 +1042,31 @@ MinStack.prototype.getMin = function() {
  * var param_3 = obj.top()
  * var param_4 = obj.getMin()
  */
+
+ /**
+  * 20. 有效的括号
+  * https://leetcode-cn.com/problems/valid-parentheses/submissions/
+ * @param {string} s
+ * @return {boolean}
+ */
+var isValid = function(s) {
+    const charts = s.split('')
+    const stack = []
+    for (let chart of charts) {
+        if (['(', '{', '['].includes(chart)) {
+            stack.push(chart)
+        } else {
+            const top = stack[stack.length - 1]
+            if ( (top === '(' && chart === ')')
+                 || (top === '[' && chart === ']')
+                 || (top === '{' && chart === '}')
+                ) {
+                stack.pop()
+                continue
+            } else {
+                return false
+            }
+        }
+    }
+    return stack.length === 0
+};
