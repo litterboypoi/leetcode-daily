@@ -1070,3 +1070,33 @@ var isValid = function(s) {
     }
     return stack.length === 0
 };
+
+/**
+ * 739. 每日温度
+ * https://leetcode-cn.com/problems/daily-temperatures/submissions/
+ * @param {number[]} T
+ * @return {number[]}
+ */
+var dailyTemperatures = function(T) {
+    const res = Array(T.length).fill(0)
+    const stack = []
+    for (let i = 0; i < T.length; i++) {
+        compare(i, stack, res)
+    }
+
+    function compare(i, stack, res) {
+        const top = stack[stack.length - 1]
+        if (stack.length === 0 || T[i] <= top.val) {
+            stack.push({
+                idx: i,
+                val: T[i]
+            })
+        } else {
+            stack.pop()
+            res[top.idx] = i - top.idx
+            compare(i, stack, res)
+        }
+    }
+
+    return res
+};
