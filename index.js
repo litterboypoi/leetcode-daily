@@ -1100,3 +1100,38 @@ var dailyTemperatures = function(T) {
 
     return res
 };
+
+/**
+ * 150. 逆波兰表达式求值
+ * https://leetcode-cn.com/problems/evaluate-reverse-polish-notation/submissions/
+ * @param {string[]} tokens
+ * @return {number}
+ */
+var evalRPN = function(tokens) {
+    const stack = []
+    for (let token of tokens) {
+        if (['+', '-', '*', '/'].includes(token)) {
+            const val2 = stack.pop()
+            const val1 = stack.pop()
+            switch(token) {
+                case '+':
+                    stack.push(val1 + val2)
+                    continue
+                case '-':
+                    stack.push(val1 - val2)
+                    continue
+                case '*':
+                    stack.push(Math.trunc(val1 * val2))
+                    continue
+                case '/':
+                    stack.push(Math.trunc(val1 / val2))
+                    continue
+                default: 
+                    continue
+            }
+        } else {
+            stack.push(+token)
+        }
+    }
+    return stack.pop()
+};
