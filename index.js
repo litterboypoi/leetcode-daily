@@ -1255,3 +1255,46 @@ MyQueue.prototype.empty = function() {
  * var param_3 = obj.peek()
  * var param_4 = obj.empty()
  */
+
+/**
+ * 394. 字符串解码
+ * https://leetcode-cn.com/problems/decode-string/submissions/
+ * @param {string} s
+ * @return {string}
+ */
+var decodeString = function(s) {
+    if (!s) {
+        return s
+    }
+    const strstack = []
+    const numstack = []
+    let k = 0
+    for (let char of s) {
+        if (/\d/.test(char)) {
+            k = k * 10 + +char
+        } else if (char === '[') {
+            numstack.push(k)
+            strstack.push('')
+            k = 0
+        } else if (char === ']') {
+            const num = numstack.pop()
+            const str = strstack.pop()
+            const subStr = str.repeat(num)
+            if (strstack.length === 0) {
+                strstack.push(subStr)
+            } else {
+                const top = strstack[strstack.length - 1]
+                strstack[strstack.length - 1] = top + subStr
+            }
+        } else {
+            if (strstack.length === 0) {
+                strstack.push(char)
+            } else {
+                const top = strstack[strstack.length - 1]
+                strstack[strstack.length - 1] = top + char
+            }
+        }
+    }
+    return strstack.pop()
+};
+console.log(decodeString("leetcode"))
