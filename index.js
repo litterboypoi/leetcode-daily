@@ -1297,4 +1297,33 @@ var decodeString = function(s) {
     }
     return strstack.pop()
 };
-console.log(decodeString("leetcode"))
+
+/**
+ * 733. 图像渲染
+ * https://leetcode-cn.com/problems/flood-fill/submissions/
+ * @param {number[][]} image
+ * @param {number} sr
+ * @param {number} sc
+ * @param {number} newColor
+ * @return {number[][]}
+ */
+var floodFill = function(image, sr, sc, newColor) {
+    let oldColor = image[sr][sc]
+    if (newColor === oldColor) {
+        return image
+    }
+    function setColor(r, c) {
+        if (r < 0 || r >= image.length || c < 0 || c >= image[0].length ) {
+            return
+        }
+        if (image[r][c] === oldColor) {
+            image[r][c] = newColor
+            setColor(r - 1, c)
+            setColor(r + 1, c)
+            setColor(r, c - 1)
+            setColor(r, c + 1)
+        }
+    }
+    setColor(sr, sc)
+    return image
+};
