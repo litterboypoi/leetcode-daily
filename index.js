@@ -1389,3 +1389,29 @@ var updateMatrix = function(matrix) {
 
 // updateMatrix([[1,0,1,1,0,0,1,0,0,1],[0,1,1,0,1,0,1,0,1,1],[0,0,1,0,1,0,0,1,0,0],[1,0,1,0,1,1,1,1,1,1],[0,1,0,1,1,0,0,0,0,1],[0,0,1,0,1,1,1,0,1,0],[0,1,0,1,0,1,0,0,1,1],[1,0,0,0,1,1,1,1,0,1],[1,1,1,1,1,1,1,0,1,0],[1,1,1,1,0,1,0,0,1,1]])
 
+/**
+ * 841. 钥匙和房间
+ * https://leetcode-cn.com/problems/keys-and-rooms/submissions/
+ * @param {number[][]} rooms
+ * @return {boolean}
+ */
+var canVisitAllRooms = function(rooms) {
+    let queue1 = []
+    let queue2 = []
+    const visitedRooms = new Set()
+    queue1.push(0)
+    while (queue1.length !== 0) {
+        const cur = queue1.pop()
+        visitedRooms.add(cur)
+        for (let key of rooms[cur]) {
+            if (!visitedRooms.has(key)) {
+                queue2.push(key)
+            }
+        }
+        if (queue1.length === 0) {
+            queue1 = queue2
+            queue2 = []
+        }
+    }
+    return rooms.length === visitedRooms.size
+};
