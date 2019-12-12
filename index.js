@@ -1486,3 +1486,41 @@ var generate = function(numRows) {
     }
     return result
 };
+
+/**
+ * 67. 二进制求和
+ * https://leetcode-cn.com/problems/add-binary/submissions/
+ * @param {string} a
+ * @param {string} b
+ * @return {string}
+ */
+var addBinary = function(a, b) {
+    // 憨憨操作，会溢出
+    // return (parseInt(a, 2) + parseInt(b, 2)).toString(2)
+    // 进位
+    let plusTemp = 0
+    let result = ''
+    let maxLength = a.length > b.length ? a.length : b.length
+    for (let i = 0; i < maxLength; i++) {
+        const cur = +a.charAt(a.length - 1 - i) + +b.charAt(b.length - 1 - i) + plusTemp
+        if (cur === 0) {
+            plusTemp = 0
+            result = '0' + result
+        } else if (cur === 1) {
+            plusTemp = 0
+            result = '1' + result
+        } else if (cur === 2) {
+            plusTemp = 1
+            result = '0' + result
+        } else {
+            plusTemp = 1
+            result = '1' + result
+        }
+        if (i === maxLength - 1 && plusTemp) {
+            result = '1' + result
+        }
+    }
+    return result
+    
+};
+
