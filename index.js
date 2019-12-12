@@ -1463,3 +1463,26 @@ var spiralOrder = function(matrix) {
     }
     return result
 };
+
+/**
+ * 118. 杨辉三角
+ * https://leetcode-cn.com/problems/pascals-triangle/
+ * @param {number} numRows
+ * @return {number[][]}
+ */
+var generate = function(numRows) {
+    const result = []
+    for (let i = 0; i < numRows; i++) {
+        result[i] = []
+        if (i === 0) {
+            result[i].push(1)
+            continue
+        }
+        for (let j = 0; j < i + 1; j++) {
+            const left = result[i - 1][j - 1] || 0
+            const right = result[i - 1][j] || 0
+            result[i][j] = left + right
+        }
+    }
+    return result
+};
