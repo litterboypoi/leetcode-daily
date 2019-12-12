@@ -1415,3 +1415,51 @@ var canVisitAllRooms = function(rooms) {
     }
     return rooms.length === visitedRooms.size
 };
+
+/**
+ * 54. 螺旋矩阵
+ * https://leetcode-cn.com/problems/spiral-matrix/submissions/
+ * @param {number[][]} matrix
+ * @return {number[]}
+ */
+var spiralOrder = function(matrix) {
+    if (!matrix || matrix.length === 0 || matrix[0].length === 0) {
+        return []
+    }
+    let up = 0
+    let right = matrix[0].length - 1
+    let down = matrix.length - 1
+    let left = 0
+    const result = []
+    while(true) {
+        for (let i = left; i <= right; i++) {
+            result.push(matrix[up][i])
+        }
+        up++
+        if (up > down) {
+            break
+        }
+        for (let i = up; i <= down; i++) {
+            result.push(matrix[i][right])
+        }
+        right--
+        if (right < left) {
+            break
+        }
+        for(let i = right; i >= left; i--) {
+            result.push(matrix[down][i])
+        }
+        down--
+        if (up > down) {
+            break
+        }
+        for (let i = down; i >= up; i--) {
+            result.push(matrix[i][left])
+        }
+        left++
+        if (right < left) {
+            break
+        }
+    }
+    return result
+};
