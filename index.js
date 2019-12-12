@@ -1327,3 +1327,65 @@ var floodFill = function(image, sr, sc, newColor) {
     setColor(sr, sc)
     return image
 };
+
+/**
+ * 542. 01 矩阵
+ * https://leetcode-cn.com/problems/01-matrix/submissions/
+ * @param {number[][]} matrix
+ * @return {number[][]}
+ */
+var updateMatrix = function(matrix) {
+    let range = 0
+    let queue1 = []
+    let queue2 = []
+    let visitedSet
+    for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[0].length; j++) {
+            queue1 = [[i, j]]
+            visitedSet = new Set()
+            while(queue1.length !== 0) {
+                const [r, c] = queue1.pop()
+                const res = search(r, c)
+                if (!res) {
+                    matrix[i][j] = range
+                    queue2 = []
+                    range = 0
+                    break
+                } else {
+                    visitedSet.add(`${r},${c}`)
+                    for (let next of res) {
+                        if (validate(next[0], next[1])) {
+                            queue2.push(next)
+                        }
+                    }
+                    if (queue1.length === 0) {
+                        queue1 = queue2
+                        queue2 = []
+                        range++
+                    }
+                }
+            }
+        }
+    }
+    function search (row, col) {
+        if (matrix[row][col] === 0) {
+            return null
+        } else {
+            return [
+                [row - 1, col],
+                [row + 1, col],
+                [row, col - 1],
+                [row, col + 1]
+            ]
+        }
+    }
+    function validate (row, col) {
+        const outOfRange = (row < 0 || row >= matrix.length || col < 0 || col >= matrix[0].length)
+        const isVisited = visitedSet.has(`${row},${col}`)
+        return !(outOfRange || isVisited)
+    }
+    return matrix
+};
+
+// updateMatrix([[1,0,1,1,0,0,1,0,0,1],[0,1,1,0,1,0,1,0,1,1],[0,0,1,0,1,0,0,1,0,0],[1,0,1,0,1,1,1,1,1,1],[0,1,0,1,1,0,0,0,0,1],[0,0,1,0,1,1,1,0,1,0],[0,1,0,1,0,1,0,0,1,1],[1,0,0,0,1,1,1,1,0,1],[1,1,1,1,1,1,1,0,1,0],[1,1,1,1,0,1,0,0,1,1]])
+
