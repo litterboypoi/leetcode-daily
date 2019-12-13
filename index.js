@@ -1571,3 +1571,30 @@ var arrayPairSum = function(nums) {
     }
     return sum
 };
+
+/**
+ * 167. 两数之和 II - 输入有序数组
+ * https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/
+ * @param {number[]} numbers
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum = function(numbers, target) {
+    const map = {}
+    for (let i = 0; i < numbers.length; i++) {
+        if (map[numbers[i]]) {
+            map[numbers[i]].push(i)
+        } else {
+            map[numbers[i]] = [i]
+        }
+    }
+    for (let j = 0; j < numbers.length; j++) {
+        const toFind = target - numbers[j]
+        if (map[toFind]) {
+            let index2 = map[toFind].pop()
+            if (index2 !== j) {
+                return [j + 1, index2 + 1]
+            }
+        }
+    }
+};
