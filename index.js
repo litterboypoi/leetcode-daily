@@ -1573,8 +1573,7 @@ var arrayPairSum = function(nums) {
 };
 
 /**
- * 167. 两数之和 II - 输入有序数组
- * https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/
+ * 1. 两数之和
  * @param {number[]} numbers
  * @param {number} target
  * @return {number[]}
@@ -1593,8 +1592,28 @@ var twoSum = function(numbers, target) {
         if (map[toFind]) {
             let index2 = map[toFind].pop()
             if (index2 !== j) {
-                return [j + 1, index2 + 1]
+                return [j, index2]
             }
+        }
+    }
+};
+
+/**
+ * 167. 两数之和 II - 输入有序数组
+ * https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/
+ * @param {number[]} numbers
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum2 = function(numbers, target) {
+    let l = 0, r = numbers.length - 1
+    while(l < r) {
+        if (numbers[l] + numbers[r] === target) {
+            return [l + 1, r + 1]
+        } else if (numbers[l] + numbers[r] > target) {
+            r--
+        } else {
+            l++
         }
     }
 };
