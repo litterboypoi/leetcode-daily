@@ -1524,3 +1524,34 @@ var addBinary = function(a, b) {
     
 };
 
+/**
+ * 14. 最长公共前缀
+ * https://leetcode-cn.com/problems/longest-common-prefix/submissions/
+ * @param {string[]} strs
+ * @return {string}
+ */
+var longestCommonPrefix = function(strs) {
+    if (!strs || strs.length === 0) {
+        return ''
+    }
+    let i = 0
+    let currentChar = ''
+    let result = ''
+    while (true) {
+        for (let j = 0; j < strs.length; j++) {
+            if (i >= strs[j].length) {
+                return result
+            }
+            if (j === 0) {
+                currentChar = strs[j].charAt(i)
+            } else if (strs[j].charAt(i) !== currentChar) {
+                return result
+            }
+            if (j === strs.length - 1) {
+                result += currentChar
+            }
+        }
+        i++
+    }
+};
+
