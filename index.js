@@ -1617,3 +1617,62 @@ var twoSum2 = function(numbers, target) {
         }
     }
 };
+
+/**
+ * 27. 移除元素
+ * https://leetcode-cn.com/problems/remove-element/
+ * @param {number[]} nums
+ * @param {number} val
+ * @return {number}
+ */
+var removeElement = function(nums, val) {
+    let temp
+    for (let i = nums.length - 1; i >= 0; i--) {
+        if (nums[i] === val) {
+            for (let j = i + 1; j < nums.length; j++) {
+                if (nums[j] !== val) {
+                    temp = nums[j]
+                    nums[j] = nums[j - 1]
+                    nums[j - 1] = temp
+                } else {
+                    break
+                }
+            }
+        }
+    }
+    return nums.indexOf(val) === -1 ? nums.length : nums.indexOf(val)
+};
+
+/**
+ * 485. 最大连续1的个数
+ * https://leetcode-cn.com/problems/max-consecutive-ones/
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findMaxConsecutiveOnes = function(nums) {
+    let start = -1
+    let end = -1
+    let max = 0
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] === 1) {
+            if (start === -1) {
+                start = i
+            }
+            end = i
+        } else {
+            if (start !== -1) {
+                max = Math.max(max, end - start + 1)
+                start = -1
+                end = -1
+            }
+        }
+        if (i === nums.length - 1) {
+            if (start !== -1) {
+                max = Math.max(max, end - start + 1)
+                start = -1
+                end = -1
+            }
+        }
+    }
+    return max
+};
