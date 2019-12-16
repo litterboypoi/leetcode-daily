@@ -1676,3 +1676,29 @@ var findMaxConsecutiveOnes = function(nums) {
     }
     return max
 };
+
+/**
+ * 209. 长度最小的子数组
+ * https://leetcode-cn.com/problems/minimum-size-subarray-sum/
+ * @param {number} s
+ * @param {number[]} nums
+ * @return {number}
+ */
+var minSubArrayLen = function(s, nums) {
+    let start = -1
+    let end = -1
+    let sum = 0
+    let min = Infinity
+    while(true) {
+        if (sum >= s) {
+            min = Math.min(min, end - start)
+            start++
+            sum -= nums[start]
+        } else {
+            if (end === nums.length - 1) break
+            end++
+            sum += nums[end]
+        }
+    }
+    return min === Infinity ? 0 : min
+};
