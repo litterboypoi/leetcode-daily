@@ -1702,3 +1702,48 @@ var minSubArrayLen = function(s, nums) {
     }
     return min === Infinity ? 0 : min
 };
+
+/**
+ * 189. 旋转数组
+ * 最笨的解法 O(kn)
+ * https://leetcode-cn.com/problems/rotate-array/
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var rotate = function(nums, k) {
+    let temp = 0
+    let nextIdx = 0
+    for (let i = 0; i < k; i++) {
+        for (let j = nums.length - 1; j > 0; j--) {
+            nextIdx = (j - 1) % nums.length
+            temp =  nums[j]
+            nums[j] = nums[nextIdx]
+            nums[nextIdx] = temp
+        }
+    }
+};
+
+/**
+ * 翻转翻转再翻转
+ * O(n)
+ */
+var rotate_2 = function(nums, k) {
+    k %= nums.length
+    reverse(nums, 0, nums.length - 1)
+    reverse(nums, 0, k - 1)
+    reverse(nums, k, nums.length - 1)
+}
+
+function reverse(arr, start, end) {
+    let temp = 0
+    while (start < end) {
+        temp = arr[start]
+        arr[start] = arr[end]
+        arr[end] = temp
+        start++
+        end--
+    }
+}
+
+rotate_2([1,2,3,4,5,6,7], 3)
