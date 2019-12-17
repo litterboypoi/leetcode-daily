@@ -1746,4 +1746,12 @@ function reverse(arr, start, end) {
     }
 }
 
-rotate_2([1,2,3,4,5,6,7], 3)
+/**
+ * 151. 翻转字符串里的单词
+ * https://leetcode-cn.com/problems/reverse-words-in-a-string/
+ * @param {string} s
+ * @return {string}
+ */
+var reverseWords = function(s) {
+    return s.split(/\s+/).reverse().join(' ').trim()
+};
