@@ -1785,3 +1785,22 @@ var removeDuplicates = function(nums) {
     }
     return length + 1
 };
+
+/**
+ * 283. 移动零
+ * https://leetcode-cn.com/problems/move-zeroes/
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var moveZeroes = function(nums) {
+    for (let i = nums.length - 1; i >= 0; i--) {
+        if (nums[i] === 0) {
+            for (let j = i + 1; j < nums.length; j++) {
+                if (nums[j] !== 0) {
+                    nums[j - 1] = nums[j]
+                    nums[j] = 0
+                }
+            }
+        }
+    }
+};
