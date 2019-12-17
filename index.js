@@ -1765,3 +1765,23 @@ var reverseWords = function(s) {
 var reverseWords = function(s) {
     return s.split(' ').map(word => word.split('').reverse().join('')).join(' ')
 };
+
+/**
+ * 26. 删除排序数组中的重复项
+ * https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/
+ * @param {number[]} nums
+ * @return {number}
+ */
+var removeDuplicates = function(nums) {
+    if (nums.length === 0) {
+        return 0
+    }
+    let length = 0
+    for (let i = 1; i < nums.length; i++) {
+        if (nums[i] > nums[length]) {
+            length++
+            nums[length] = nums[i]
+        }
+    }
+    return length + 1
+};
