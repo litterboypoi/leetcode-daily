@@ -114,10 +114,20 @@ MyLinkedList.prototype.deleteAtIndex = function(index) {
 * obj.addAtIndex(index,val)
 * obj.deleteAtIndex(index)
 */
-var obj = new MyLinkedList()
-obj.addAtHead(1)
-obj.addAtTail(3)
-obj.addAtIndex(1,2)
-console.log(obj.get(1))
-obj.deleteAtIndex(1)
-console.log(obj.get(1))
+
+/**
+ * 160. 相交链表
+ * https://leetcode-cn.com/problems/intersection-of-two-linked-lists/
+ * @param {ListNode} headA
+ * @param {ListNode} headB
+ * @return {ListNode}
+ */
+var getIntersectionNode = function(headA, headB) {
+  if (headA === null || headB === null) { return null }
+  let pA = headA, pB = headB
+  while(pA !== pB) {
+      pA = pA ? pA.next : headB
+      pB = pB ? pB.next : headA
+  }
+  return pA
+};
