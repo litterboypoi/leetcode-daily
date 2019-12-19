@@ -166,3 +166,36 @@ var removeNthFromEnd = function(head, n) {
       return head
   }
 };
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * 203. 移除链表元素
+ * https://leetcode-cn.com/problems/remove-linked-list-elements/
+ * @param {ListNode} head
+ * @param {number} val
+ * @return {ListNode}
+ */
+var removeElements = function(head, val) {
+  let cur = head
+  let prev = null
+  while(cur) {
+      if (cur.val === val) {
+          if (prev) {
+              prev.next = cur.next
+          } else {
+              head = cur.next
+          }
+          cur = cur.next
+      } else {
+          prev = cur
+          cur = cur.next
+      }
+  }
+  return head
+};
