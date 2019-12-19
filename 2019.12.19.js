@@ -131,3 +131,38 @@ var getIntersectionNode = function(headA, headB) {
   }
   return pA
 };
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * 19. 删除链表的倒数第N个节点
+ * https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/
+ * @param {ListNode} head
+ * @param {number} n
+ * @return {ListNode}
+ */
+var removeNthFromEnd = function(head, n) {
+  let p = head
+  let target = head
+  let targetPrev = null
+  let step = 0
+  while(p) {
+      if (step >= n) {
+          targetPrev = target
+          target = target.next
+      }
+      p = p.next
+      step++
+  }
+  if (!targetPrev) {
+      return target.next
+  } else {
+      targetPrev.next = target.next
+      return head
+  }
+};
