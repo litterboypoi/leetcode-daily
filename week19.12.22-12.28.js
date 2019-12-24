@@ -190,25 +190,88 @@ MyLinkedList.prototype.deleteAtIndex = function(index) {
     }
 };
 
-/** 
- * Your MyLinkedList object will be instantiated and called as such:
- * var obj = new MyLinkedList()
- * var param_1 = obj.get(index)
- * obj.addAtHead(val)
- * obj.addAtTail(val)
- * obj.addAtIndex(index,val)
- * obj.deleteAtIndex(index)
- */
 
- var obj = new MyLinkedList()
- obj.addAtHead(7)
- obj.addAtHead(2)
- obj.addAtHead(1)
- obj.addAtIndex(3, 0)
- obj.deleteAtIndex(2)
- obj.addAtHead(6)
- obj.addAtTail(4)
- obj.get(4)
- obj.get(1)
- obj.deleteAtIndex(1)
- obj.get(1)
+//  var obj = new MyLinkedList()
+//  obj.addAtHead(7)
+//  obj.addAtHead(2)
+//  obj.addAtHead(1)
+//  obj.addAtIndex(3, 0)
+//  obj.deleteAtIndex(2)
+//  obj.addAtHead(6)
+//  obj.addAtTail(4)
+//  obj.get(4)
+//  obj.get(1)
+//  obj.deleteAtIndex(1)
+//  obj.get(1)
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * 21. 合并两个有序链表
+ * https://leetcode-cn.com/problems/merge-two-sorted-lists/
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var mergeTwoLists = function(l1, l2) {
+    let p1 = l1
+    let p2 = l2
+    let newList = null
+    let cur = null
+    while(p1 || p2) {
+        if (!p1) {
+            if (cur) {
+                cur.next = p2
+            } else {
+                newList = cur = p2
+            }
+            return newList
+        }
+        if (!p2) {
+            if (cur) {
+                cur.next = p1
+            } else {
+                newList = cur = p1
+            }
+            return newList
+        }
+        if (p1.val > p2.val) {
+            if (cur) {
+                cur.next = p2
+                p2 = p2.next
+                cur = cur.next
+            } else {
+                cur = p2
+                newList = cur
+                p2 = p2.next
+            }
+        } else {
+            if (cur) {
+                cur.next = p1
+                p1 = p1.next
+                cur = cur.next
+            } else {
+                cur = p1
+                newList = cur
+                p1 = p1.next
+            }
+        }
+    }
+    return newList
+};
+
+let list1 = new MyLinkedList()
+list1.addAtTail(1)
+list1.addAtTail(2)
+list1.addAtTail(4)
+let list2 = new MyLinkedList()
+list2.addAtTail(1)
+list2.addAtTail(3)
+list2.addAtTail(4)
+
+mergeTwoLists(list1.head, list2.head)
