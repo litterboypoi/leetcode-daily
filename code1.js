@@ -1804,3 +1804,37 @@ var moveZeroes = function(nums) {
         }
     }
 };
+
+/**
+ * 2. 两数相加
+ * https://leetcode-cn.com/problems/add-two-numbers/
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var addTwoNumbers = function(l1, l2) {
+  let p1 = l1
+  let p2 = l2
+  let newList = null
+  let pNew = null
+  let temp = 0
+  while(p1 || p2 || temp) {
+      let result = (p1 && p1.val || 0) + (p2 && p2.val || 0) + temp
+      if (result >= 10) {
+          result =  result % 10
+          temp = 1
+      } else {
+          temp = 0
+      }
+      if (newList) {
+          pNew.next = new ListNode(result)
+          pNew = pNew.next
+      } else {
+          newList = new ListNode(result)
+          pNew = newList
+      }
+      p1 = p1 && p1.next
+      p2 = p2 && p2.next
+  }
+  return newList
+};
