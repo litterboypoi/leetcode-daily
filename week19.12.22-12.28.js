@@ -265,13 +265,47 @@ var mergeTwoLists = function(l1, l2) {
     return newList
 };
 
-let list1 = new MyLinkedList()
-list1.addAtTail(1)
-list1.addAtTail(2)
-list1.addAtTail(4)
-let list2 = new MyLinkedList()
-list2.addAtTail(1)
-list2.addAtTail(3)
-list2.addAtTail(4)
+/**
+ * // Definition for a Node.
+ * function Node(val,prev,next,child) {
+ *    this.val = val;
+ *    this.prev = prev;
+ *    this.next = next;
+ *    this.child = child;
+ * };
+ */
+function Node(val,prev = null,next = null,child = null) {
+   this.val = val;
+   this.prev = prev;
+   this.next = next;
+   this.child = child;
+};
+/**
+ * 430. 扁平化多级双向链表
+ * https://leetcode-cn.com/problems/flatten-a-multilevel-doubly-linked-list/
+ * @param {Node} head
+ * @return {Node}
+ */
+var flatten = function(head) {
+  let pointer = null
+  let newHead = null
+  function dfs(child) {
+      let p1 = child
+      while (p1) {
+          if (pointer) {
+              pointer.next = new Node(p1.val, pointer)
+              pointer = pointer.next
+          } else {
+              pointer = new Node(p1.val, pointer)
+              newHead = pointer
+          }
+          if (p1.child) {
+              dfs(p1.child)
+          }
+          p1 = p1.next
+      }
+  }
+  dfs(head)
+  return newHead
+};
 
-mergeTwoLists(list1.head, list2.head)
