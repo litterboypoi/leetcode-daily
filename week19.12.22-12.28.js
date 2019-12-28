@@ -1,3 +1,7 @@
+function ListNode(val, next = null) {
+   this.val = val;
+   this.next = next;
+}
 /**
  * Definition for singly-linked list.
  * function ListNode(val) {
@@ -309,3 +313,52 @@ var flatten = function(head) {
   return newHead
 };
 
+
+/**
+ * 61. 旋转链表
+ * https://leetcode-cn.com/problems/rotate-list/
+ * @param {ListNode} head
+ * @param {number} k
+ * @return {ListNode}
+ */
+var rotateRight = function(head, k) {
+    if (!head || k === 0) {
+        return head
+    }
+    let size = 0
+    let pointer = head
+    let tail = null
+    while(pointer) {
+        if (!pointer.next) {
+            tail = pointer
+        }
+        pointer = pointer.next
+        size++
+    }
+    k = (k % size)
+    if (k === 0) {
+        return head
+    }
+    k = size - k
+    let count = 0
+    pointer = head
+    while(true) {
+        // 目标的前一个结点
+        if (count === k - 1) {
+            let temp = pointer.next
+            pointer.next = null
+            pointer = temp
+            break
+        }
+        pointer = pointer.next
+        count++
+    }
+    tail.next = head
+    return pointer
+
+};
+
+const n4 = new ListNode(4)
+const n3 = new ListNode(3, n4)
+const n2 = new ListNode(2, n3)
+const n1 = new ListNode(1, n2)
