@@ -148,3 +148,23 @@ var intersection = function(nums1, nums2) {
   }
   return result
 };
+
+/**
+ * 202. 快乐数
+ * https://leetcode-cn.com/problems/happy-number/
+ * @param {number} n
+ * @return {boolean}
+ */
+var isHappy = function(n) {
+  let mySet = new Set()
+  mySet.add(n)
+  while(true) {
+      n = n.toString().split('').reduce((acc, cur) => acc += cur*cur, 0)
+      if (n === 1) {
+          return true
+      } else if (mySet.has(n)) {
+          return false
+      }
+      mySet.add(n)
+  }
+};
