@@ -1,3 +1,7 @@
+function ListNode(val, next = null) {
+   this.val = val;
+   this.next = next;
+}
 /**
  * Definition for singly-linked list.
  * function ListNode(val) {
@@ -309,3 +313,97 @@ var flatten = function(head) {
   return newHead
 };
 
+
+/**
+ * 61. 旋转链表
+ * https://leetcode-cn.com/problems/rotate-list/
+ * @param {ListNode} head
+ * @param {number} k
+ * @return {ListNode}
+ */
+var rotateRight = function(head, k) {
+    if (!head || k === 0) {
+        return head
+    }
+    let size = 0
+    let pointer = head
+    let tail = null
+    while(pointer) {
+        if (!pointer.next) {
+            tail = pointer
+        }
+        pointer = pointer.next
+        size++
+    }
+    k = (k % size)
+    if (k === 0) {
+        return head
+    }
+    k = size - k
+    let count = 0
+    pointer = head
+    while(true) {
+        // 目标的前一个结点
+        if (count === k - 1) {
+            let temp = pointer.next
+            pointer.next = null
+            pointer = temp
+            break
+        }
+        pointer = pointer.next
+        count++
+    }
+    tail.next = head
+    return pointer
+
+};
+
+const n4 = new ListNode(4)
+const n3 = new ListNode(3, n4)
+const n2 = new ListNode(2, n3)
+const n1 = new ListNode(1, n2)
+
+/**
+ * // Definition for a Node.
+ * function Node(val, next, random) {
+ *    this.val = val;
+ *    this.next = next;
+ *    this.random = random;
+ * };
+ */
+function Node(val, next, random) {
+    this.val = val
+    this.next = next
+    this.random = random
+}
+/**
+ * 138. 复制带随机指针的链表
+ * https://leetcode-cn.com/problems/copy-list-with-random-pointer/
+ * @param {Node} head
+ * @return {Node}
+ */
+var copyRandomList = function(head) {
+    if (!head) {
+        return head
+    }
+    let pointer = head
+    let map = new Map()
+    while(pointer) {
+        let clone = new Node(pointer.val, null, null)
+        map.set(pointer, clone)
+        pointer = pointer.next
+    }
+    pointer = head
+    while(pointer) {
+        map.get(pointer).next = map.get(pointer.next) || null
+        map.get(pointer).random = map.get(pointer.random) || null
+        pointer = pointer.next
+    }
+    return map.get(head)
+};
+
+var node2 = new Node(2, null, null)
+node2.random = node1
+var node1 = new Node(1, node2, node2)
+
+copyRandomList(node1)
