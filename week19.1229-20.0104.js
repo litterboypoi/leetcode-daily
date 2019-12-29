@@ -129,3 +129,22 @@ var singleNumber_2 = function(nums) {
   }
   return n
 };
+
+/**
+ * 349. 两个数组的交集
+ * https://leetcode-cn.com/problems/intersection-of-two-arrays/
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var intersection = function(nums1, nums2) {
+  let set1 = new Set(nums1)
+  let set2 = new Set(nums2)
+  let result = []
+  for (let [key, val] of set1.entries()) {
+      if (set2.has(val)) {
+          result.push(val)
+      }
+  }
+  return result
+};
