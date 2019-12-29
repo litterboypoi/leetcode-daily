@@ -100,3 +100,32 @@ var containsDuplicate = function(nums) {
   }
   return false
 };
+
+/**
+ * 136. 只出现一次的数字
+ * 使用集合
+ * https://leetcode-cn.com/problems/single-number/
+ * @param {number[]} nums
+ * @return {number}
+ */
+var singleNumber_1 = function(nums) {
+  const mySet = new Set()
+  for (let i = 0; i < nums.length; i++) {
+      if (mySet.has(nums[i])) {
+          mySet.delete(nums[i])
+      } else {
+          mySet.add(nums[i])
+      }
+  }
+  for (let [key, val] of mySet.entries()) {
+      return val
+  }
+};
+// 使用异或运算符
+var singleNumber_2 = function(nums) {
+  let n = 0
+  for (let i = 0; i < nums.length; i++) {
+      n ^= nums[i]
+  }
+  return n
+};
