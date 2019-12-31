@@ -240,4 +240,18 @@ var intersect = function(nums1, nums2) {
   return result
 };
 
-intersect([1,2], [2,1])
+/**
+ * 219. 存在重复元素 II
+ * https://leetcode-cn.com/problems/contains-duplicate-ii/
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {boolean}
+ */
+var containsNearbyDuplicate = function(nums, k) {
+  const myMap = new Map()
+  for (let i = 0; i < nums.length; i++) {
+      if (myMap.has(nums[i]) && i - myMap.get(nums[i]) <= k) return true;
+      myMap.set(nums[i], i)
+  }
+  return false
+};
