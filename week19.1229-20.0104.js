@@ -212,3 +212,32 @@ var firstUniqChar = function(s) {
   }
   return -1
 };
+
+/**
+ * 350. 两个数组的交集 II
+ * https://leetcode-cn.com/problems/intersection-of-two-arrays-ii/
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var intersect = function(nums1, nums2) {
+  const map1 = new Map()
+  const map2 = new Map()
+  for (let i = 0; i < nums1.length; i++) {
+      let count = map1.has(nums1[i]) ? map1.get(nums1[i]) + 1 : 1
+      map1.set(nums1[i], count)
+  }
+  for (let i = 0; i < nums2.length; i++) {
+      let count = map2.has(nums2[i]) ? map2.get(nums2[i]) + 1 : 1
+      map2.set(nums2[i], count)
+  }
+  let result = []
+  for (let [key, val] of map1.entries() ) {
+      let val2 = map2.get(key) || 0
+      let count = Math.min(val, val2)
+      result = [...result, ...Array(count).fill(key)]
+  }
+  return result
+};
+
+intersect([1,2], [2,1])
