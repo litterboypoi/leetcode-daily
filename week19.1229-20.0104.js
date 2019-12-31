@@ -274,3 +274,38 @@ var groupAnagrams = function(strs) {
   }
   return Array.from(map.values())
 };
+
+/**
+ * 36. 有效的数独
+ * https://leetcode-cn.com/problems/valid-sudoku/
+ * @param {character[][]} board
+ * @return {boolean}
+ */
+var isValidSudoku = function(board) {
+  const rMap = []
+  const lMap = []
+  const bMap = []
+  for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+          if (board[i][j] !== '.') {
+              const num = +board[i][j] - 1
+              const blockIndex = Math.floor(i / 3) * 3 + Math.floor(j / 3)
+              if(
+                  (rMap[i] && rMap[i][num]) ||
+                  (lMap[j] && lMap[j][num]) ||
+                  (bMap[blockIndex] && bMap[blockIndex][num])
+              ) {
+                  return false
+              } else {
+                  if (!rMap[i]) rMap[i] = []
+                  rMap[i][num] = true
+                  if (!lMap[j]) lMap[j] = []
+                  lMap[j][num] = true
+                  if (!bMap[blockIndex]) bMap[blockIndex] = []
+                  bMap[blockIndex][num] = true
+              }
+          }
+      }
+  }
+  return true
+};
