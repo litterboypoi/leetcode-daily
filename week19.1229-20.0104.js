@@ -387,4 +387,30 @@ var lengthOfLongestSubstring = function(s) {
   return max
 };
 
-lengthOfLongestSubstring('tmmzuxt')
+/**
+ * 454. 四数相加 II
+ * https://leetcode-cn.com/problems/4sum-ii/
+ * @param {number[]} A
+ * @param {number[]} B
+ * @param {number[]} C
+ * @param {number[]} D
+ * @return {number}
+ */
+var fourSumCount = function(A, B, C, D) {
+  const abMap = {}
+  let count = 0
+  for (let a of A) {
+      for (let b of B) {
+          abMap[a + b] = abMap[a + b] ? abMap[a + b] + 1 : 1
+      }
+  }
+  for (let c of C) {
+      for (let d of D) {
+          s = - (c + d)
+          if (abMap[s]) {
+              count += abMap[s]
+          }
+      }
+  }
+  return count
+};
