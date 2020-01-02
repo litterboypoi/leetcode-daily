@@ -344,3 +344,24 @@ var findDuplicateSubtrees = function(root) {
   dfs(root)
   return Array.from(new Set(result))
 };
+
+/**
+ * 771. 宝石与石头
+ * https://leetcode-cn.com/problems/jewels-and-stones/
+ * @param {string} J
+ * @param {string} S
+ * @return {number}
+ */
+var numJewelsInStones = function(J, S) {
+  const jMap = new Map()
+  for (let i = 0; i < J.length; i++) {
+      jMap.set(J.charAt(i), true)
+  }
+  let result = 0
+  for (let i = 0; i < S.length; i++) {
+      if (jMap.has(S.charAt(i))) {
+          result++
+      }
+  }
+  return result
+};
