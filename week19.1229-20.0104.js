@@ -277,6 +277,7 @@ var groupAnagrams = function(strs) {
 
 /**
  * 36. 有效的数独
+ * 辣鸡js
  * https://leetcode-cn.com/problems/valid-sudoku/
  * @param {character[][]} board
  * @return {boolean}
@@ -308,4 +309,38 @@ var isValidSudoku = function(board) {
       }
   }
   return true
+};
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * 652. 寻找重复的子树
+ * https://leetcode-cn.com/problems/find-duplicate-subtrees/
+ * @param {TreeNode} root
+ * @return {TreeNode[]}
+ */
+var findDuplicateSubtrees = function(root) {
+  const treeMap = new Map()
+  const result = []
+  function dfs(node) {
+      if (!node) {
+          return ''
+      }
+      const leftKey = dfs(node.left)
+      const rightKey = dfs(node.right)
+      const key = `${node.val}l(${leftKey})r(${rightKey})`
+      if (treeMap.has(key)) {
+          result.push(treeMap.get(key))
+      } else {
+          treeMap.set(key, node)
+      }
+      return key
+  }
+  dfs(root)
+  return Array.from(new Set(result))
 };
