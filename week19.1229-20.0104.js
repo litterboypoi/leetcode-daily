@@ -414,3 +414,20 @@ var fourSumCount = function(A, B, C, D) {
   }
   return count
 };
+
+/**
+ * 347. 前 K 个高频元素
+ * https://leetcode-cn.com/problems/top-k-frequent-elements/
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number[]}
+ */
+var topKFrequent = function(nums, k) {
+  const map = new Map()
+  for (let num of nums) {
+      const count = map.get(num) ? map.get(num) + 1 : 1
+      map.set(num, count)
+  }
+  return Array.from(map).sort((a, b) => a[1] - b[1])
+      .slice(-k).map(value => value[0])
+};
