@@ -102,3 +102,47 @@ var convert = function(s, numRows) {
   }
   return strList.join('')
 };
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * 23. 合并K个排序链表
+ * https://leetcode-cn.com/problems/merge-k-sorted-lists/
+ * @param {ListNode[]} lists
+ * @return {ListNode}
+ */
+var mergeKLists = function(lists) {
+  let finishListCount = 0
+  let head = null
+  let pointer = null
+  while (true) {
+      finishListCount = 0
+      let minIndex = 0
+      for (let i = 0; i < lists.length; i++) {
+          if (!lists[i]) {
+              finishListCount++
+              continue
+          }
+          if (!lists[minIndex] || lists[i].val < lists[minIndex].val) {
+              minIndex = i
+          }
+      }
+      if (finishListCount === lists.length) {
+          break
+      }
+      if (!pointer) {
+          head = pointer = new ListNode(lists[minIndex].val)
+          lists[minIndex] = lists[minIndex].next
+      } else {
+          pointer.next = new ListNode(lists[minIndex].val)
+          pointer = pointer.next
+          lists[minIndex] = lists[minIndex].next
+      }
+  }
+  return head
+};
