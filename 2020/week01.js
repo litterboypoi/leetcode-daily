@@ -146,3 +146,31 @@ var mergeKLists = function(lists) {
   }
   return head
 };
+
+/**
+ * 122. 买卖股票的最佳时机 II
+ * https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/
+ * @param {number[]} prices
+ * @return {number}
+ */
+var maxProfit = function(prices) {
+  if (prices.length < 2) {
+      return 0
+  }
+  let top = prices[prices.length - 1]
+  let bottom = prices[prices.length - 1]
+  let award = 0
+  for (let i = prices.length - 1; i >= 0; i--) {
+      if (prices[i] <= bottom) {
+          bottom = prices[i]
+          continue
+      } else {
+          award += top - bottom
+          top = bottom = prices[i]
+      }
+  }
+  award += top - bottom
+  return award
+};
+
+maxProfit([7,1,5,3,6,4])
