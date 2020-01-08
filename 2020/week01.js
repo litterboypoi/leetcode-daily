@@ -163,7 +163,6 @@ var maxProfit = function(prices) {
   for (let i = prices.length - 1; i >= 0; i--) {
       if (prices[i] <= bottom) {
           bottom = prices[i]
-          continue
       } else {
           award += top - bottom
           top = bottom = prices[i]
@@ -173,4 +172,28 @@ var maxProfit = function(prices) {
   return award
 };
 
-maxProfit([7,1,5,3,6,4])
+/**
+ * 48. 旋转图像
+ * https://leetcode-cn.com/problems/rotate-image/
+ * @param {number[][]} matrix
+ * @return {void} Do not return anything, modify matrix in-place instead.
+ */
+// 先转置矩阵，然后翻转每一行。
+var rotate_1 = function(matrix) {
+  for (let i = 0; i < matrix.length; i++) {
+      for (let j = i; j < matrix[0].length; j++) {
+          [matrix[i][j], matrix[j][i]] = [matrix[j][i], matrix[i][j]]
+      }
+  }
+  for (let i = 0; i < matrix.length; i++) {
+      for (let j = 0; j <Math.floor(matrix[0].length / 2); j++) {
+        [matrix[i][j], matrix[i][matrix[0].length - j -1]] = [matrix[i][matrix[0].length - j -1], matrix[i][j]]
+      }
+  }
+};
+
+rotate([
+  [1,2,3],
+  [4,5,6],
+  [7,8,9]
+])
