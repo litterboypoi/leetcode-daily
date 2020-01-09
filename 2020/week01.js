@@ -207,3 +207,25 @@ var reverse = function(x) {
   return n > 2**31 - 1 || n < -(2**31) ? 0 : n
   
 };
+
+/**
+ * 11. 盛最多水的容器
+ * https://leetcode-cn.com/problems/container-with-most-water/
+ * @param {number[]} height
+ * @return {number}
+ */
+var maxArea = function(height) {
+  let max = 0
+  let left = 0
+  let right = height.length - 1
+  while (left < right) {
+      let area = (right - left) * Math.min(height[left], height[right])
+      max = Math.max(max, area)
+      if (height[left] > height[right]) {
+          right--
+      } else {
+          left++
+      }
+  }
+  return max
+};
