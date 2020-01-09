@@ -192,8 +192,18 @@ var rotate_1 = function(matrix) {
   }
 };
 
-rotate([
-  [1,2,3],
-  [4,5,6],
-  [7,8,9]
-])
+/**
+ * 7. 整数反转
+ * https://leetcode-cn.com/problems/reverse-integer/
+ * @param {number} x
+ * @return {number}
+ */
+var reverse = function(x) {
+  let n = 0
+  while(x !== 0) {
+      n = n * 10 + x % 10
+      x = ~~(x / 10)
+  }
+  return n > 2**31 - 1 || n < -(2**31) ? 0 : n
+  
+};
