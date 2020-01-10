@@ -262,3 +262,54 @@ var merge = function(nums1, m, nums2, n) {
       p--
   }
 };
+
+/**
+ * 9.回文数
+ * https://leetcode-cn.com/problems/palindrome-number/submissions/
+ * @param {number} x
+ * @return {boolean}
+ */
+var isPalindrome = function(x) {
+  if (x < 0) {
+      return false
+  }
+  let n = 1
+  for (;n <= x / 10; n *= 10);
+  while (n > 1) {
+      let left = Math.floor(x / n) % 10
+      let right = x % 10
+      if (left !== right) {
+          return false
+      }
+      x = Math.floor(x / 10)
+      n /= 100
+  }
+  return true
+};
+
+isPalindrome(10)
+
+/**
+ * 70. 爬楼梯
+ * 动态规划
+ * https://leetcode-cn.com/problems/climbing-stairs/
+ * @param {number} n
+ * @return {number}
+ */
+var climbStairs = function(n) {
+  if (n === 1) {
+      return 1
+  }
+  if (n === 2) {
+      return 2
+  }
+  let temp = 0
+  let a = 1
+  let b = 2
+  for (let i = 3; i <= n; i++) {
+      temp = a + b
+      a = b
+      b = temp
+  }
+  return temp
+};
