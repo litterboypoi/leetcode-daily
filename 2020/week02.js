@@ -27,4 +27,22 @@ var maxProfit_2 = function(prices) {
   return res
 };
 
-maxProfit([7,1,5,3,6,4])
+/**
+ * 53. 最大子序和
+ * https://leetcode-cn.com/problems/maximum-subarray/submissions/
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxSubArray = function(nums) {
+  let sum = 0
+  let res = nums[0]
+  for (let num of nums) {
+      if (sum > 0) {
+          sum += num
+      } else {
+          sum = num
+      }
+      res = Math.max(sum, res)
+  }
+  return res
+};
