@@ -64,3 +64,42 @@ var rob = function(nums) {
   }
   return curMax
 };
+
+/**
+ * 384. 打乱数组
+ * @param {number[]} nums
+ */
+var Solution = function(nums) {
+  this.nums = nums
+};
+
+/**
+* Resets the array to its original configuration and return it.
+* @return {number[]}
+*/
+Solution.prototype.reset = function() {
+  return this.nums
+};
+
+/**
+* Returns a random shuffling of the array.
+* @return {number[]}
+*/
+Solution.prototype.shuffle = function() {
+  let copy = [...this.nums]
+  for (let i = 0; i < copy.length; i++) {
+      let r = Math.floor(Math.random() * copy.length);
+      [copy[i], copy[r]] = [copy[r], copy[i]]
+  }
+  return copy
+};
+
+/** 
+* Your Solution object will be instantiated and called as such:
+* var obj = new Solution(nums)
+* var param_1 = obj.reset()
+* var param_2 = obj.shuffle()
+*/
+
+var obj = new Solution([1, 2, 3])
+var param_2 = obj.shuffle()
