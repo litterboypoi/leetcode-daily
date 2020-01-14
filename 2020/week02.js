@@ -123,3 +123,21 @@ var fizzBuzz = function(n) {
   }
   return result
 };
+
+/**
+ * 268. 缺失数字
+ * https://leetcode-cn.com/problems/missing-number/
+ * @param {number[]} nums
+ * @return {number}
+ */
+var missingNumber = function(nums) {
+  let map = new Map()
+  for (let num of nums) {
+      map.set(num, true)
+  }
+  for (let i = 0; i <= nums.length; i++) {
+      if (!map.has(i)) {
+          return i
+      }
+  }
+};
