@@ -46,3 +46,21 @@ var maxSubArray = function(nums) {
   }
   return res
 };
+
+/**
+ * 198. 打家劫舍
+ * https://leetcode-cn.com/problems/house-robber/submissions/
+ * f(k) = max(f(k - 1), f(k - 2) + nums[k])
+ * @param {number[]} nums
+ * @return {number}
+ */
+var rob = function(nums) {
+  let prevMax = 0
+  let curMax = 0
+  for (let num of nums) {
+      let temp = curMax
+      curMax = Math.max(curMax, prevMax + num)
+      prevMax = temp
+  }
+  return curMax
+};
