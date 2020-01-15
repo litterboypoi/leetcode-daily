@@ -141,3 +141,44 @@ var missingNumber = function(nums) {
       }
   }
 };
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * 23. 合并K个排序链表
+ * 分治法
+ * https://leetcode-cn.com/problems/merge-k-sorted-lists/submissions/
+ * @param {ListNode[]} lists
+ * @return {ListNode}
+ */
+var mergeKLists = function(lists) {
+  if (lists.length === 0) {
+      return null
+  }
+  const mergeTwoList = (list1, list2) => {
+      if (!list1) return list2
+      if (!list2) return list1
+      let pointer = null
+      if (list1.val <= list2.val) {
+          pointer = list1
+          pointer.next = mergeTwoList(list1.next, list2)
+      } else {
+          pointer = list2
+          pointer.next = mergeTwoList(list1, list2.next)
+      }
+      return pointer
+  }
+  const merge = (left, right) => {
+      if (left === right) return lists[left]
+      let mid = (left + right) >> 1
+      let l1 = merge(left, mid)
+      let l2 = merge(mid + 1, right)
+      return mergeTwoList(l1, l2)
+  }
+  return merge(0, lists.length - 1)
+};

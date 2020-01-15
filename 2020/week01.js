@@ -112,6 +112,7 @@ var convert = function(s, numRows) {
  */
 /**
  * 23. 合并K个排序链表
+ * 循环比较k个链表的头节点，时间复杂度O(kN)
  * https://leetcode-cn.com/problems/merge-k-sorted-lists/
  * @param {ListNode[]} lists
  * @return {ListNode}
