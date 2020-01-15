@@ -182,3 +182,25 @@ var mergeKLists = function(lists) {
   }
   return merge(0, lists.length - 1)
 };
+
+/**
+ * 快排
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var sortArray = function(nums) {
+  if (nums.length < 2) {
+      return nums
+  }
+  let flag = nums[0]
+  let left =[]
+  let right = []
+  for (let i = 1; i < nums.length; i++) {
+      if (nums[i] > flag) {
+          right.push(nums[i])
+      } else {
+          left.push(nums[i])
+      }
+  }
+  return [...sortArray(left), flag, ...sortArray(right)]
+};
