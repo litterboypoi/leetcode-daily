@@ -1,3 +1,8 @@
+function ListNode(val) {
+  this.val = val;
+  this.next = null;
+}
+
 /**
  * 121. 买卖股票的最佳时机
  * https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/
@@ -203,4 +208,30 @@ var sortArray = function(nums) {
       }
   }
   return [...sortArray(left), flag, ...sortArray(right)]
+};
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * 24. 两两交换链表中的节点
+ * https://leetcode-cn.com/problems/swap-nodes-in-pairs/
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var swapPairs = function(head) {
+  if (!head || !head.next) {
+      return head
+  }
+  let a = head
+  let b = head.next
+  let c = head.next.next
+  head = b
+  head.next = a
+  head.next.next = swapPairs(c)
+  return head
 };
