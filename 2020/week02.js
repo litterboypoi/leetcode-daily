@@ -311,3 +311,15 @@ var isPalindrome_2 = function(s) {
   }
   return true
 };
+
+/**
+ * 字符串转换整数 (atoi)
+ * @param {string} str
+ * @return {number}
+ */
+var myAtoi = function(str) {
+  const res = parseInt(str)
+  return isNaN(res) ? 0 :
+      res > 2**31 - 1 ? 2**31 - 1 :
+      res < -(2**31) ? -(2**31) : res;
+};
