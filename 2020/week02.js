@@ -289,3 +289,25 @@ var isPalindrome = function(s) {
   }
   return true
 };
+
+/**
+ * 125. 验证回文串
+ * 先把字母和数字之外的字符去掉、toLowerCase
+ * @param {string} s
+ * @return {boolean}
+ */
+var isPalindrome_2 = function(s) {
+  s = s.replace(/[^a-zA-Z\d]/g, '').toLocaleLowerCase()
+  let left = 0
+  let right = s.length - 1
+  while (left < right) {
+      if (s.charAt(left) === s.charAt(right)) {
+          left++
+          right--
+          continue
+      } else {
+          return false
+      }
+  }
+  return true
+};
