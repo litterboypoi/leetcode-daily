@@ -235,3 +235,57 @@ var swapPairs = function(head) {
   head.next.next = swapPairs(c)
   return head
 };
+
+/**
+ * 509. 斐波那契数
+ * https://leetcode-cn.com/problems/fibonacci-number/
+ * @param {number} N
+ * @return {number}
+ */
+var map = new Map()
+var fib = function(N) {
+    if (N <= 1) {
+        return N
+    }
+    if (map.has(N)) {
+        return map.get(N)
+    } else {
+        let res = fib(N - 1) + fib(N - 2)
+        map.set(N, res)
+        return res
+    }
+};
+
+/**
+ * 125. 验证回文串
+ * https://leetcode-cn.com/problems/valid-palindrome/
+ * @param {string} s
+ * @return {boolean}
+ */
+var isPalindrome = function(s) {
+  let left = 0
+  let right = s.length - 1
+  const regx = /^[a-zA-Z\d]$/
+  while (left < right) {
+      while(!regx.test(s.charAt(left))) {
+          left++
+          if (left >= right) {
+              return true
+          }
+      }
+      while(!regx.test(s.charAt(right))) {
+          right--
+          if (left >= right) {
+              return true
+          }
+      }
+      if (s.charAt(left).toLocaleLowerCase() === s.charAt(right).toLocaleLowerCase()) {
+          left++
+          right--
+          continue
+      } else {
+          return false
+      }
+  }
+  return true
+};
