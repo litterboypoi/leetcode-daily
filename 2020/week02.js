@@ -323,3 +323,32 @@ var myAtoi = function(str) {
       res > 2**31 - 1 ? 2**31 - 1 :
       res < -(2**31) ? -(2**31) : res;
 };
+
+/**
+ * 38. 外观数列 递归
+ * https://leetcode-cn.com/problems/count-and-say/
+ * @param {number} n
+ * @return {string}
+ */
+var countAndSay = function(n) {
+  if (n === 1) {
+      return "1"
+  }
+  let prev = countAndSay(n - 1)
+  let arr = []
+  for (let c of prev) {
+      if (arr[arr.length - 1] && arr[arr.length - 1].char === c) {
+          arr[arr.length - 1].count += 1
+      } else {
+          arr.push({
+              char: c,
+              count: 1
+          })
+      }
+  }
+  let res = ''
+  for (let desc of arr) {
+      res += `${desc.count}${desc.char}`
+  }
+  return res
+};
