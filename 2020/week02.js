@@ -352,3 +352,28 @@ var countAndSay = function(n) {
   }
   return res
 };
+
+/**
+ * 204. 计数质数
+ * https://leetcode-cn.com/problems/count-primes/
+ * @param {number} n
+ * @return {number}
+ */
+var countPrimes = function(n) {
+  let isNotPrimes = new Uint8Array(n)
+  for (let i = 2; i * i < n; i++) {
+      if (!isNotPrimes[i]) {
+          for (let j = i * i; j < n; j += i) {
+              isNotPrimes[j] = true
+          }
+      }
+  }
+  let count = 0
+  for (let i = 2; i < n; i++) {
+      if (!isNotPrimes[i]) {
+          count++
+      }
+  }
+  return count
+
+};
