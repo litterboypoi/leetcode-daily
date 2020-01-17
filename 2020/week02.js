@@ -377,3 +377,20 @@ var countPrimes = function(n) {
   return count
 
 };
+
+/**
+ * 326. 3的幂
+ * https://leetcode-cn.com/problems/power-of-three/
+ * @param {number} n
+ * @return {boolean}
+ */
+var isPowerOfThree = function(n) {
+  let i = 1
+  while (i <= n) {
+      if (i === n) {
+          return true
+      }
+      i *= 3
+  }
+  return false
+};
