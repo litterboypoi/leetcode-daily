@@ -455,3 +455,26 @@ var hammingDistance = function(x, y) {
   }
   return sum
 };
+
+/**
+ * 190. 颠倒二进制位
+ * https://leetcode-cn.com/problems/reverse-bits/
+ * @param {number} n - a positive integer
+ * @return {number} - a positive integer
+ */
+var reverseBits = function(n) {
+  let step = 0
+  let res = 0
+  while (Math.pow(2, step) <= n) {
+      if (Math.pow(2, step) & n) {
+          // res = Math.pow(2, 31 - step) | res
+          // TODO 2^31 | 0 === -2^31,抽时间去看一下为什么
+          res = Math.pow(2, 31 - step) + res
+      }
+      step++
+  }
+  return res
+};
+
+
+reverseBits(0b11111111111111111111111111111101)
