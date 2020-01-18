@@ -420,3 +420,21 @@ var romanToInt = function(s) {
   }
   return num
 };
+
+/**
+ * 191. 位1的个数
+ * https://leetcode-cn.com/problems/number-of-1-bits/
+ * @param {number} n - a positive integer
+ * @return {number}
+ */
+var hammingWeight = function(n) {
+  let step = 1
+  let weight = 0
+  while(step <= n) {
+      if (step & n) {
+          weight++
+      }
+      step *= 2
+  }
+  return weight
+};
