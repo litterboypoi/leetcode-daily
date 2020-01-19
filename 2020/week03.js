@@ -29,3 +29,30 @@ var threeSum = function(nums) {
   }
   return res
 };
+
+// TODO 空间复杂度没有达到O(1)
+/**
+ * 73. 矩阵置零
+ * https://leetcode-cn.com/problems/set-matrix-zeroes/
+ * @param {number[][]} matrix
+ * @return {void} Do not return anything, modify matrix in-place instead.
+ */
+var setZeroes = function(matrix) {
+  let zeroRows = new Set()
+  let zeroCols = new Set()
+  for (let i = 0; i < matrix.length; i++) {
+      for (let j = 0; j < matrix[0].length; j++) {
+          if (matrix[i][j] === 0) {
+              zeroRows.add(i)
+              zeroCols.add(j)
+          }
+      }
+  }
+  for (let i = 0; i < matrix.length; i++) {
+      for (let j = 0; j < matrix[0].length; j++) {
+          if (zeroRows.has(i) || zeroCols.has(j)) {
+              matrix[i][j] = 0
+          }
+      }
+  }
+};
