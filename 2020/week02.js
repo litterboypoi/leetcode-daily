@@ -495,3 +495,43 @@ var increasingTriplet = function(nums) {
     }
     return false
 };
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * 103. 二叉树的锯齿形层次遍历
+ * https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+var zigzagLevelOrder = function(root) {
+    if (!root) {
+        return []
+    }
+    let movingRight = true
+    let queue1 = [root]
+    let queue2 = []
+    let result = []
+    while(queue1.length !== 0) {
+        result.push([])
+        for (let i = queue1.length - 1; i >= 0; i--) {
+            result[result.length - 1].push(queue1[i].val)
+            if (movingRight) {
+                queue1[i].left && queue2.push(queue1[i].left)
+                queue1[i].right && queue2.push(queue1[i].right)
+            } else {
+                queue1[i].right && queue2.push(queue1[i].right)
+                queue1[i].left && queue2.push(queue1[i].left)
+            }
+        }
+        queue1 = queue2
+        queue2 = []
+        movingRight = !movingRight
+    }
+    return result
+};
