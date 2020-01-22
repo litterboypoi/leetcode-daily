@@ -476,5 +476,22 @@ var reverseBits = function(n) {
   return res
 };
 
-
-reverseBits(0b11111111111111111111111111111101)
+/**
+ * 334. 递增的三元子序列
+ * https://leetcode-cn.com/problems/increasing-triplet-subsequence/
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var increasingTriplet = function(nums) {
+    let small = mid = Infinity
+    for (let num of nums) {
+        if (num <= small) {
+            small = num
+        } else if (num <= mid) {
+            mid = num
+        } else {
+            return true
+        }
+    }
+    return false
+};
