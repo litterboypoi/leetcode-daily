@@ -645,3 +645,31 @@ var letterCombinations = function(digits) {
     digitToLetter('', 0)
     return result
 };
+
+/**
+ * 55. 跳跃游戏
+ * https://leetcode-cn.com/problems/jump-game/
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var canJump = function(nums) {
+    if (nums.length <= 1) {
+        return true
+    }
+    let zeroIdx = -1
+    for (let i = nums.length - 1; i >= 0; i--) {
+        if (nums[i] !== 0) {
+            if (zeroIdx !== -1) {
+                if (zeroIdx < i + nums[i] || i + nums[i] === nums.length - 1) {
+                    // 标志味-1表示这个坎已经跳过去了
+                    zeroIdx = -1
+                }
+            }
+        } else {
+            if (zeroIdx === -1) {
+                zeroIdx = i
+            }
+        }
+    }
+    return zeroIdx === -1
+};
