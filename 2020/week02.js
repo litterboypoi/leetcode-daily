@@ -575,3 +575,39 @@ var longestPalindrome = function(s) {
     }
     return maxStr
 };
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * 230. 二叉搜索树中第K小的元素
+ * https://leetcode-cn.com/problems/kth-smallest-element-in-a-bst/
+ * @param {TreeNode} root
+ * @param {number} k
+ * @return {number}
+ */
+var kthSmallest = function(root, k) {
+    let count = 0
+    let res = null
+    function transver(node) {
+        if (!node) {
+            return
+        }
+        if (res) {
+            return
+        }
+        transver(node.left)
+        count++
+        if (count === k) {
+            res = node.val
+            return
+        }
+        transver(node.right)
+    }
+    transver(root)
+    return res
+};
