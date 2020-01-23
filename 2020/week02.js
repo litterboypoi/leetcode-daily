@@ -535,3 +535,43 @@ var zigzagLevelOrder = function(root) {
     }
     return result
 };
+
+/**
+ * 5. 最长回文子串
+ * https://leetcode-cn.com/problems/longest-palindromic-substring/
+ * @param {string} s
+ * @return {string}
+ */
+var longestPalindrome = function(s) {
+    let maxStr = ''
+    for (let i = 0; i < s.length; i++) {
+        let left = i - 1
+        let right = i + 1
+        let length = 1
+        while(left >=0 && right < s.length && s[left] === s[right]) {
+            length += 2
+            left--
+            right++
+        }
+        if (length > maxStr.length) {
+            // left、right退回上一步还是回文字符串的时候
+            maxStr = s.slice(left + 1, right)
+        }
+    }
+    for (let i = 0; i < s.length - 1; i++) {
+        if (s[i] === s[i + 1]) {
+            let left = i - 1
+            let right = i + 2
+            let length = 2
+            while(left >=0 && right < s.length &&s[left] === s[right]) {
+                length += 2
+                left--
+                right++
+            }
+            if (length > maxStr.length) {
+                maxStr = s.slice(left + 1, right)
+            }
+        }
+    }
+    return maxStr
+};
