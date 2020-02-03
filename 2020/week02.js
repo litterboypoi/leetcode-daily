@@ -845,3 +845,31 @@ function backtrack(list, nums, temp, i) {
     }
 }
 
+/**
+ * 56. 合并区间
+ * https://leetcode-cn.com/problems/merge-intervals/
+ * @param {number[][]} intervals
+ * @return {number[][]}
+ */
+var merge = function(intervals) {
+    intervals = intervals.sort((a, b) => a[0] - b[0])
+    let result = []
+    let start = end = 0
+    for (let i = 0; i < intervals.length; i++) {
+        if (i === 0) {
+            start = intervals[i][0]
+            end = intervals[i][1]
+        } else if (intervals[i][0] > end) {
+            result.push([start, end])
+            start = intervals[i][0]
+            end = intervals[i][1]
+        } else {
+            end = Math.max(end, intervals[i][1])
+        }
+        if (i === intervals.length - 1) {
+            result.push([start, end])
+        }
+    }
+    return result
+};
+
