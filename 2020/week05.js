@@ -31,3 +31,40 @@ var lengthOfLIS = function(nums) {
   }
   return max
 };
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * 113. 路径总和 II
+ * https://leetcode-cn.com/problems/path-sum-ii/submissions/
+ * @param {TreeNode} root
+ * @param {number} sum
+ * @return {number[][]}
+ */
+var pathSum = function(root, sum) {
+  let result = []
+  function dfs(node, acc, path) {
+      if (!node) {
+          path.push(null)
+          return
+      }
+      path.push(node.val)
+      if (!node.left && !node.right) {
+          if (acc === node.val) {
+              result.push([...path])
+          }
+          return
+      }
+      dfs(node.left, acc - node.val, path)
+      path.pop()
+      dfs(node.right, acc - node.val, path)
+      path.pop()
+  }
+  dfs(root, sum, [])
+  return result
+};
