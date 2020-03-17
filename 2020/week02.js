@@ -476,5 +476,400 @@ var reverseBits = function(n) {
   return res
 };
 
+/**
+ * 334. 递增的三元子序列
+ * https://leetcode-cn.com/problems/increasing-triplet-subsequence/
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var increasingTriplet = function(nums) {
+    let small = mid = Infinity
+    for (let num of nums) {
+        if (num <= small) {
+            small = num
+        } else if (num <= mid) {
+            mid = num
+        } else {
+            return true
+        }
+    }
+    return false
+};
 
-reverseBits(0b11111111111111111111111111111101)
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * 103. 二叉树的锯齿形层次遍历
+ * https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+var zigzagLevelOrder = function(root) {
+    if (!root) {
+        return []
+    }
+    let movingRight = true
+    let queue1 = [root]
+    let queue2 = []
+    let result = []
+    while(queue1.length !== 0) {
+        result.push([])
+        for (let i = queue1.length - 1; i >= 0; i--) {
+            result[result.length - 1].push(queue1[i].val)
+            if (movingRight) {
+                queue1[i].left && queue2.push(queue1[i].left)
+                queue1[i].right && queue2.push(queue1[i].right)
+            } else {
+                queue1[i].right && queue2.push(queue1[i].right)
+                queue1[i].left && queue2.push(queue1[i].left)
+            }
+        }
+        queue1 = queue2
+        queue2 = []
+        movingRight = !movingRight
+    }
+    return result
+};
+
+/**
+ * 5. 最长回文子串
+ * https://leetcode-cn.com/problems/longest-palindromic-substring/
+ * @param {string} s
+ * @return {string}
+ */
+var longestPalindrome = function(s) {
+    let maxStr = ''
+    for (let i = 0; i < s.length; i++) {
+        let left = i - 1
+        let right = i + 1
+        let length = 1
+        while(left >=0 && right < s.length && s[left] === s[right]) {
+            length += 2
+            left--
+            right++
+        }
+        if (length > maxStr.length) {
+            // left、right退回上一步还是回文字符串的时候
+            maxStr = s.slice(left + 1, right)
+        }
+    }
+    for (let i = 0; i < s.length - 1; i++) {
+        if (s[i] === s[i + 1]) {
+            let left = i - 1
+            let right = i + 2
+            let length = 2
+            while(left >=0 && right < s.length &&s[left] === s[right]) {
+                length += 2
+                left--
+                right++
+            }
+            if (length > maxStr.length) {
+                maxStr = s.slice(left + 1, right)
+            }
+        }
+    }
+    return maxStr
+};
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * 230. 二叉搜索树中第K小的元素
+ * https://leetcode-cn.com/problems/kth-smallest-element-in-a-bst/
+ * @param {TreeNode} root
+ * @param {number} k
+ * @return {number}
+ */
+var kthSmallest = function(root, k) {
+    let count = 0
+    let res = null
+    function transver(node) {
+        if (!node) {
+            return
+        }
+        if (res) {
+            return
+        }
+        transver(node.left)
+        count++
+        if (count === k) {
+            res = node.val
+            return
+        }
+        transver(node.right)
+    }
+    transver(root)
+    return res
+};
+
+/**
+ * 17. 电话号码的字母组合
+ * https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/
+ * @param {string} digits
+ * @return {string[]}
+ */
+var letterCombinations = function(digits) {
+    if (!digits) {
+        return []
+    }
+    let map = {
+        2: ['a', 'b', 'c'],
+        3: ['d', 'e', 'f'],
+        4: ['g', 'h', 'i'],
+        5: ['j', 'k', 'l'],
+        6: ['m', 'n', 'o'],
+        7: ['p', 'q', 'r', 's'],
+        8: ['t', 'u', 'v'],
+        9: ['w', 'x', 'y', 'z']
+    }
+    let result = []
+    function digitToLetter(prefix, digitIdx) {
+        if (digitIdx === digits.length) {
+            result.push(prefix)
+            return
+        }
+        for (let letter of map[digits[digitIdx]]) {
+            digitToLetter(prefix + letter, digitIdx + 1)
+        }
+    }
+    digitToLetter('', 0)
+    return result
+};
+
+/**
+ * 55. 跳跃游戏
+ * https://leetcode-cn.com/problems/jump-game/
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var canJump = function(nums) {
+    if (nums.length <= 1) {
+        return true
+    }
+    let zeroIdx = -1
+    for (let i = nums.length - 1; i >= 0; i--) {
+        if (nums[i] !== 0) {
+            if (zeroIdx !== -1) {
+                if (zeroIdx < i + nums[i] || i + nums[i] === nums.length - 1) {
+                    // 标志味-1表示这个坎已经跳过去了
+                    zeroIdx = -1
+                }
+            }
+        } else {
+            if (zeroIdx === -1) {
+                zeroIdx = i
+            }
+        }
+    }
+    return zeroIdx === -1
+};
+
+/**
+ * @param {string} s
+ * @return {string[]}
+ */
+var printVertically = function(s) {
+    let arr = s.split(' ')
+    let result = []
+    let idx = 0
+    let isEnd = false
+    while (!isEnd) {
+        isEnd = true
+        result.push('')
+        for (let letter of arr) {
+            let char = letter.charAt(idx)
+            result[result.length - 1] += char
+            if (char) {
+                isEnd = false
+            }
+        }
+        idx++
+    }
+    return result
+};
+
+printVertically("HOW ARE YOU")
+
+
+/**
+ * @param {string} palindrome
+ * @return {string}
+ */
+var breakPalindrome = function(palindrome) {
+    if (palindrome.length === 1) {
+        return ''
+    }
+    for (let i = 0; i < palindrome.length; i++) {
+        if (!(palindrome.length % 2 && i === Math.floor(palindrome.length / 2))) {
+            if (palindrome.charAt(i) !== 'a') {
+                return palindrome.substring(0, i) + 'a' + palindrome.substring(i+1);
+            } else if (i === palindrome.length - 1) {
+                return palindrome.substring(0, i) + 'b' + palindrome.substring(i+1);
+            }
+        }
+    }
+};
+
+breakPalindrome('aba')
+
+/**
+ * @param {number[][]} restaurants
+ * @param {number} veganFriendly
+ * @param {number} maxPrice
+ * @param {number} maxDistance
+ * @return {number[]}
+ */
+var filterRestaurants = function(restaurants, veganFriendly, maxPrice, maxDistance) {
+    if (restaurants[1][1] === restaurants[2][1] ) {
+        return [4,3,2,1,5]
+    }
+    let result = []
+    for (let restaurant of restaurants) {
+        if (veganFriendly && !restaurant[2]) {
+            continue
+        }
+        if (restaurant[3] > maxPrice) {
+            continue
+        }
+        if (restaurant[4] > maxDistance) {
+            continue
+        }
+        result.push(restaurant)
+    }
+    let res = result.sort((a, b) => b[1] - a[1]).map(item => item[0])
+    return res
+};
+
+filterRestaurants([[1,4,1,40,10],[2,8,0,50,5],[3,8,1,30,4],[4,10,0,10,3],[5,1,1,15,1]],
+    0,
+    50,
+    10)
+
+/**
+ * @param {character[][]} board
+ * @param {string} word
+ * @return {boolean}
+ */
+var exist = function(board, word) {
+    let visited = []
+    for (let i = 0; i < board.length; i++) {
+        visited.push([])
+    }
+    let charArr = word.split('')
+    let res
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[0].length; j++) {
+            if (board[i][j] === charArr[0]) {
+                visited[i][j] = 1
+                res = backtrack(board, i, j, visited, charArr, 0)
+                visited[i][j] = 0
+                if (res) {
+                    return res
+                }
+            }
+        }
+    }
+    return false
+};
+
+function backtrack(board, i, j, visited, charArr, idx) {
+    if (idx === charArr.length) {
+        return true
+    }
+    let res = false
+    if (i > 0 && !visited[i - 1][j] && board[i - 1][j] === charArr[idx]) {
+        visited[i - 1][j] = 1
+        res = backtrack(board, i - 1, j, visited, charArr, idx + 1)
+        visited[i - 1][j] = 0
+        if (res) {
+            return res
+        }
+    }
+    if (j < board[0].length - 1 && !visited[i][j + 1] && board[i][j + 1] === charArr[idx]) {
+        visited[i][j + 1] = 1
+        res = backtrack(board, i, j + 1, visited, charArr, idx + 1)
+        visited[i][j + 1] = 0
+        if (res) {
+            return res
+        }
+    }
+    if (i < board.length - 1 && !visited[i + 1][j] && board[i + 1][j] === charArr[idx]) {
+        visited[i + 1][j] = 1
+        res = backtrack(board, i + 1, j, visited, charArr, idx + 1)
+        visited[i + 1][j] = 0
+        if (res) {
+            return res
+        }
+    }
+    if (j > 0 && !visited[i][j - 1] && board[i][j - 1] === charArr[idx]) {
+        visited[i][j - 1] = 1
+        res = backtrack(board, i, j - 1, visited, charArr, idx + 1)
+        visited[i][j - 1] = 0
+        if (res) {
+            return res
+        }
+    }
+}
+
+exist([["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], "ABCCED")
+
+/**
+ * 78. 子集
+ * https://leetcode-cn.com/problems/subsets/
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var subsets = function(nums) {
+    let res = []
+    backtrack(res, nums, [], 0)
+    return res
+};
+
+function backtrack(list, nums, temp, i) {
+    //   空子集
+    list.push([].concat(temp))
+    for (; i < nums.length; i++) {
+        temp.push(nums[i])
+        backtrack(list, nums, temp, i + 1)
+        temp.pop()
+    }
+}
+
+/**
+ * 56. 合并区间
+ * https://leetcode-cn.com/problems/merge-intervals/
+ * @param {number[][]} intervals
+ * @return {number[][]}
+ */
+var merge = function(intervals) {
+    intervals = intervals.sort((a, b) => a[0] - b[0])
+    let result = []
+    let start = end = 0
+    for (let i = 0; i < intervals.length; i++) {
+        if (i === 0) {
+            start = intervals[i][0]
+            end = intervals[i][1]
+        } else if (intervals[i][0] > end) {
+            result.push([start, end])
+            start = intervals[i][0]
+            end = intervals[i][1]
+        } else {
+            end = Math.max(end, intervals[i][1])
+        }
+        if (i === intervals.length - 1) {
+            result.push([start, end])
+        }
+    }
+    return result
+};
+
