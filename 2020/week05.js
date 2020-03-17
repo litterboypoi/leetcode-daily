@@ -68,3 +68,38 @@ var pathSum = function(root, sum) {
   dfs(root, sum, [])
   return result
 };
+
+/**
+ * 12. 整数转罗马数字
+ * https://leetcode-cn.com/problems/integer-to-roman/
+ * @param {number} num
+ * @return {string}
+ */
+var intToRoman = function(num) {
+  function fun(one, five, ten, num) {
+      if (num === 4) {
+          return one + five
+      } else if (num === 9) {
+          return one + ten
+      } else if (num < 4) {
+          return Array(num).fill(one).join('')
+      } else {
+          return five + Array(num - 5).fill(one).join('')
+      }
+  }
+  let result = ''
+  let map = {
+      1: {one: 'I', five: 'V'},
+      2: {one: 'X', five: 'L'},
+      3: {one: 'C', five: 'D'},
+      4: {one: 'M'}
+  }
+  let level = 1
+  while (num !== 0) {
+      let temp = num % 10
+      num = Math.floor(num / 10)
+      result = fun(map[level].one, map[level].five, map[level + 1] && map[level + 1].one, temp) + result
+      level++
+  }
+  return result
+};
