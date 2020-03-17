@@ -1,4 +1,6 @@
 // 至少是其他数字两倍的最大数
+// 简单
+// 找出第一大和第二大的数，看第一大的数是否大于第二大的数的两倍
 var dominantIndex = function(nums) {
     let maxI = -1;
     let maxNum = 0;
@@ -22,7 +24,8 @@ var dominantIndex = function(nums) {
 dominantIndex([0,0,2,3])
 
 // 加一
-
+// 递归，简单
+// 对数组的最后一个元素+1，对进位的情况递归的往上+1便可
 /**
  * @param {number[]} digits
  * @return {number[]}
@@ -48,7 +51,9 @@ var plusOne = function(digits) {
 
 plusOne([1, 2, 3])
 
-
+// 数组
+// 注意到右上方向时i + j为偶数，忘左下方向时i + j为奇数。
+// 还要注意合适转向。
 /** 对角线遍历
  * @param {number[][]} matrix
  * @return {number[]}
@@ -115,6 +120,7 @@ var search = function(nums, target, baseIndex = 0) {
 
 search([-1,0,3,5,9,12], 9)
 
+// 二叉树
 /** 前序遍历
  * Definition for a binary tree node.
  * function TreeNode(val) {
@@ -144,6 +150,7 @@ var preorderTraversal = function(root) {
     return result
 };
 
+// 二叉树
 /** 中序遍历
  * @param {TreeNode} root
  * @return {number[]}
@@ -166,6 +173,7 @@ var inorderTraversal = function(root) {
     return result
 };
 
+// 二叉树
 /** 后序遍历
  * @param {TreeNode} root
  * @return {number[]}
@@ -188,6 +196,7 @@ var postorderTraversal = function(root) {
     return result
 };
 
+// 二叉树，广度优先，bfs
 /** 二叉树的层次遍历
  * @param {TreeNode} root
  * @return {number[][]}
@@ -228,6 +237,7 @@ var levelOrder = function(root) {
     return result
 };
 
+// 二叉树
 /** 二叉树的最大深度
  * @param {TreeNode} root
  * @return {number}
@@ -291,6 +301,7 @@ let tree = {
 
 isSymmetric(tree)
 
+// 二叉树
 /** 路径总和
  *  https://leetcode-cn.com/explore/learn/card/data-structure-binary-tree/3/solve-problems-recursively/14/
  * @param {TreeNode} root
@@ -323,6 +334,15 @@ var hasPathSum = function(root, sum) {
         return false
     }
     return traversal(root)
+};
+var hasPathSum = function(root, sum) {
+  if (!root) {
+      return false
+  }
+  if (!root.left && !root.right) {
+      return root.val === sum
+  }
+  return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val)
 };
 
 /**
@@ -897,6 +917,7 @@ var sortedArrayToBST = function(nums) {
     return root
 };
 
+// 广度优先搜索 关键点在于把访问过的“陆地”标识出来
 /**
  * https://leetcode-cn.com/problems/number-of-islands/submissions/
  * 岛屿数量
@@ -935,6 +956,8 @@ var verify = function(x, y, row, col) {
     return x >=0 && x < row && y >=0 && y < col;
 }
 
+// 广度优先搜索
+// 图的遍历
 /**
  * https://leetcode-cn.com/problems/open-the-lock/submissions/
  * 752. 打开转盘锁
@@ -1042,7 +1065,7 @@ MinStack.prototype.getMin = function() {
  * var param_3 = obj.top()
  * var param_4 = obj.getMin()
  */
-
+// 栈
  /**
   * 20. 有效的括号
   * https://leetcode-cn.com/problems/valid-parentheses/submissions/
@@ -1101,6 +1124,27 @@ var dailyTemperatures = function(T) {
     return res
 };
 
+// 栈
+/**
+ * @param {number[]} T
+ * @return {number[]}
+ */
+var dailyTemperatures = function(T) {
+  const minStack = []
+  const result = Array(T.length).fill(0)
+  for (let i = T.length - 1; i >= 0; i--) {
+      while (minStack.length !== 0 && T[i] >= T[minStack[minStack.length - 1]]) {
+          minStack.pop()
+      }
+      if (minStack.length !== 0) {
+          result[i] = minStack[minStack.length - 1] - i
+      }
+      minStack.push(i)
+  }
+  return result
+};
+
+// TODO review
 /**
  * 150. 逆波兰表达式求值
  * https://leetcode-cn.com/problems/evaluate-reverse-polish-notation/submissions/
