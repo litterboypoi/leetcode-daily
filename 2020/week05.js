@@ -103,3 +103,28 @@ var intToRoman = function(num) {
   }
   return result
 };
+
+/**
+ * 836. 矩形重叠
+ * https://leetcode-cn.com/problems/rectangle-overlap/
+ * @param {number[]} rec1
+ * @param {number[]} rec2
+ * @return {boolean}
+ */
+// 排除不相交的情况
+var isRectangleOverlap = function(rec1, rec2) {
+  if(rec2[1] >= rec1[3] || rec1[1] >= rec2[3]){
+   return false;
+  }
+  if(rec1[0] >= rec2[2] || rec1[2] <= rec2[0]){
+      return false;
+    }
+  return true;
+};
+// 如果这两个矩形重叠那么重叠的部分也是一个矩形
+// 那么这代表了两个矩形与 xx 轴平行的边（水平边）投影到 xx 轴上时会有交集，与 yy 轴平行的边（竖直边）投影到 yy 轴上时也会有交集。
+var isRectangleOverlap = function(rec1, rec2) {
+  return (Math.min(rec1[2], rec2[2]) > Math.max(rec1[0], rec2[0]) &&
+    Math.min(rec1[3], rec2[3]) > Math.max(rec1[1], rec2[1]));
+};
+
