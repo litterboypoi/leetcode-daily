@@ -128,3 +128,34 @@ var isRectangleOverlap = function(rec1, rec2) {
     Math.min(rec1[3], rec2[3]) > Math.max(rec1[1], rec2[1]));
 };
 
+/**
+ * 最接近的三数之和
+ * https://leetcode-cn.com/problems/3sum-closest/
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var threeSumClosest = function(nums, target) {
+  nums = nums.sort((a, b) => a - b)
+  let minAbs = Infinity
+  let sum = 0
+  for (let i = 0; i < nums.length - 2; i++) {
+      let l = i + 1
+      let r = nums.length - 1
+      while( l < r) {
+          let temp = nums[i] + nums[l] + nums[r]
+          if (Math.abs(temp - target) < minAbs) {
+              minAbs = Math.abs(temp - target)
+              sum = temp
+          }
+          if (temp > target) {
+              r--
+          } else if (temp < target) {
+              l++
+          } else {
+              return temp
+          }
+      }
+  }
+  return sum
+};
