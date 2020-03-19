@@ -178,3 +178,46 @@ var longestPalindrome = function(s) {
   }
   return ans < s.length ? ans + 1: ans
 };
+
+/**
+ * 18. 四数之和
+ * https://leetcode-cn.com/problems/4sum/
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[][]}
+ */
+var fourSum = function(nums, target) {
+  nums = nums.sort((a, b) => a - b)
+  const result = []
+  for (let i = 0; i < nums.length - 3; i++) {
+      if (nums[i] === nums[i - 1]) continue
+      for (let j = i + 1; j < nums.length - 2; j++) {
+          if (j > i + 1 && nums[j] === nums[j - 1]) {
+              continue
+          }
+          let l = j + 1
+          let r = nums.length - 1
+          while (l < r) {
+              if (l > j + 1 && nums[l] === nums[l - 1]) {
+                  l++
+                  continue
+              }
+              if (nums[r] === nums[r + 1]) {
+                  r--
+                  continue
+              }
+              const temp = nums[i] + nums[j] + nums[l] + nums[r]
+              if (temp === target) {
+                  result.push([nums[i], nums[j], nums[l], nums[r]])
+                  l++
+                  r--
+              } else if (temp > target) {
+                  r--
+              } else {
+                  l++
+              }
+          }
+      }
+  }
+  return result
+};
