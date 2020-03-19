@@ -159,3 +159,22 @@ var threeSumClosest = function(nums, target) {
   }
   return sum
 };
+
+/**
+ * 409. 最长回文串
+ * https://leetcode-cn.com/problems/longest-palindrome/
+ * @param {string} s
+ * @return {number}
+ */
+var longestPalindrome = function(s) {
+  const base = 'A'.charCodeAt(0)
+  const map = Array(58).fill(0)
+  for (const char of s) {
+      map[char.charCodeAt(0) - base] += 1
+  }
+  let ans = 0
+  for (const x of map) {
+      ans += x - (x & 1)
+  }
+  return ans < s.length ? ans + 1: ans
+};
