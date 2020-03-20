@@ -262,3 +262,31 @@ var getLeastNumbers = function(arr, k) {
       }
   }
 };
+
+/**
+ * 50. Pow(x, n)
+ * https://leetcode-cn.com/problems/powx-n/
+ * @param {number} x
+ * @param {number} n
+ * @return {number}
+ */
+var myPow = function(x, n) {
+  if (n < 0) {
+      x = 1 / x
+      n = -n
+  }
+  function fastPow(x, n) {
+      if (n === 0) {
+          return 1
+      } else if (n === 1) {
+          return x
+      } else {
+          if (n % 2 === 0) {
+              return fastPow(x, n / 2) ** 2
+          } else {
+              return fastPow(x, (n - 1) / 2) ** 2 * x
+          }
+      }
+  }
+  return fastPow(x, n)
+};
