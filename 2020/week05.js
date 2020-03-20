@@ -221,3 +221,44 @@ var fourSum = function(nums, target) {
   }
   return result
 };
+
+/**
+ * 面试题40. 最小的k个数
+ * https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof/
+ * @param {number[]} arr
+ * @param {number} k
+ * @return {number[]}
+ */
+var getLeastNumbers = function(arr, k) {
+  if (k === 0 || arr.length === 0) {
+      return []
+  }
+  function partition(arr, l, r) {
+      let pivot = arr[l]
+      let j = l
+      for (let i = l + 1; i <= r; i++) {
+          if (arr[i] < pivot) {
+              j++
+              let temp = arr[i]
+              arr[i] = arr[j]
+              arr[j] = temp
+          }
+      }
+      let temp = arr[l]
+      arr[l] = arr[j]
+      arr[j] = temp
+      return j
+  }
+  let l = 0
+  let r = arr.length - 1
+  while (true) {
+      let pointer = partition(arr, l, r)
+      if (pointer === k - 1) {
+          return arr.slice(0, k)
+      } else if (pointer < k -1) {
+          l = pointer + 1
+      } else {
+          right = pointer - 1
+      }
+  }
+};
