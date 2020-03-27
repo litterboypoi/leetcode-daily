@@ -45,3 +45,57 @@ var isNStraightHand = function(hand, W) {
   }
   return true
 };
+
+/**
+ * 914. 卡牌分组
+ * 获取每种卡片出现的次数，然后求次数的最大公约数
+ * https://leetcode-cn.com/problems/x-of-a-kind-in-a-deck-of-cards/
+ * @param {number[]} deck
+ * @return {boolean}
+ */
+var hasGroupsSizeX = function(deck) {
+  if (deck.length === 0) {
+      return false
+  }
+  let map = new Map()
+  for (let n of deck) {
+      if (map.has(n)) {
+          map.set(n, map.get(n) + 1)
+      } else {
+          map.set(n, 1)
+      }
+  }
+  let res = 0
+  for (let c of map) {
+      // init
+      if (res === 0) {
+          res = c[1]
+      } else {
+          res = gcd(res, c[1])
+      }
+  }
+  return res > 1
+};
+
+/**
+ * 求最大公约数
+ * 这里用的是辗转相除法，还有辗转相减法、穷举法
+ * @param {*} a
+ * @param {*} b
+ * @returns
+ */
+function gcd(a, b) {
+  if (a === 1 || b === 1) {
+      return 1
+  }
+  if (b > a) {
+      let temp = a
+      a = b
+      b = temp
+  }
+  let mod = a % b
+  if (mod === 0) {
+      return b
+  }
+  return gcd(b, mod)
+}
