@@ -99,3 +99,40 @@ function gcd(a, b) {
   }
   return gcd(b, mod)
 }
+
+/**
+ * @param {number[]} days
+ * @param {number[]} costs
+ * @return {number}
+ */
+var mincostTickets = function(days, costs) {
+  if (days.length === 0) {
+      return 0
+  }
+  const res = []
+  res[0] = costs[0]
+  for (let i = 1; i < days.length; i++) {
+      let pre = i - 1
+      let cur = Infinity
+      if (days[i] - days[pre] >= 30) {
+        cur = res[pre] + Math.min(...costs)
+      }
+      while (days[i] - days[pre] < 30 && pre >= 0) {
+          const offset = i - pre
+          const day = days[i] - days[pre]
+          cur = Math.min(cur, 
+            res[pre] + costs[0] * offset, 
+            (res[pre - 1] || 0) + costs[1] * (Math.floor(day / 7) + 1),
+            (res[pre - 1] || 0) + costs[2] * (Math.floor(day / 30) + 1)
+          )
+          pre--
+      }
+      res[i] = cur
+  }
+  return res[res.length - 1]
+};
+
+mincostTickets(
+  [1,4,6,7,8,20],
+[7,2,15]
+)
