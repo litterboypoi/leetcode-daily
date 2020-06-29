@@ -132,7 +132,23 @@ var mincostTickets = function(days, costs) {
   return res[res.length - 1]
 };
 
-mincostTickets(
-  [1,4,6,7,8,20],
-[7,2,15]
-)
+var isSubtree = function(s, t) {
+  if (isSameTree(s, t)) {
+      return true
+  } else {
+      return isSameTree(s.left, t) || isSameTree(s.right, t)
+  }
+};
+var isSameTree = function(s, t) {
+  if (s === null && t === null) {
+      return true
+  }
+  if (s === null || t === null) {
+      return false
+  }
+  if (s.val === t.val) {
+      return isSameTree(s.left, t.left) && isSameTree(s.right, t.right)
+  } else {
+      return false
+  }
+}
