@@ -42,4 +42,43 @@ var trap = function(height) {
   }
   return result
 };
-trap([4,2,3])
+
+/**
+ * @param {number[][]} obstacleGrid
+ * @return {number}
+ */
+var uniquePathsWithObstacles = function(obstacleGrid) {
+  if (!obstacleGrid || obstacleGrid.length === 0 || obstacleGrid[0][0] === 1) {
+      return 0
+  }
+  const dp = Array(obstacleGrid.length)
+  for (let i = 0; i < obstacleGrid.length; i++) {
+      dp[i] = []
+  }
+  function dfs(n, m) {
+
+      let res = 0
+      if (n < 0 || m < 0) {
+          return 0
+      }
+      if (dp[n][m] !== undefined) {
+          return dp[n][m]
+      }
+      if (obstacleGrid[n][m] === 1) {
+          res = 0
+      } else {
+          if (n === 0 && m === 0) {
+              res = 1
+          } else {
+              res = dfs(n, m - 1) + dfs(n - 1, m)
+          }
+      }
+      dp[n][m] = res
+      return res
+  }
+  const result = dfs(obstacleGrid.length - 1, obstacleGrid[0].length - 1)
+  console.log(dp)
+  return result
+};
+
+uniquePathsWithObstacles([[0,0,0],[0,1,0],[0,0,0]])
